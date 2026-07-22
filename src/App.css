@@ -1,0 +1,154 @@
+/* Was macht diese Datei?
+   Das Aussehen (CSS) des Lernpfads. CSS ist kein React -- aber jede App
+   braucht etwas Gestaltung. Die Farben kommen aus den Variablen in index.css
+   (z.B. var(--accent)), damit heller und dunkler Modus automatisch passen. */
+
+.lernpfad {
+  text-align: left;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.kopf {
+  margin-bottom: 24px;
+}
+.kopf p {
+  color: var(--text);
+}
+
+/* Zwei Spalten: links die Liste (schmal), rechts der Inhalt (breit). */
+.raster {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+/* Auf schmalen Bildschirmen untereinander statt nebeneinander. */
+@media (max-width: 720px) {
+  .raster {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Lektions-Liste (links) --- */
+.liste {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.liste-knopf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+  cursor: pointer;
+}
+.liste-knopf:hover {
+  border-color: var(--accent-border);
+}
+/* Der aktive Eintrag wird hervorgehoben -- so sieht man den Fortschritt. */
+.liste-knopf.aktiv {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--text-h);
+  font-weight: 600;
+}
+.liste-nummer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* --- Inhalt (rechts) --- */
+.inhalt {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  background: var(--bg);
+}
+.fortschritt {
+  font-size: 14px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.untertitel {
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+/* Die Box, in der das Live-Beispiel laeuft. */
+.beispiel {
+  border: 1px dashed var(--accent-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.beispiel h3 {
+  margin-top: 0;
+  color: var(--text-h);
+}
+.beispiel button,
+.beispiel input {
+  font: inherit;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+.beispiel input {
+  cursor: text;
+  min-width: 220px;
+}
+
+/* Die gelbe Aufgaben-Box (wiederverwendbare Aufgabe-Komponente). */
+.aufgabe {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 20px;
+}
+.aufgabe strong {
+  color: var(--text-h);
+}
+.aufgabe p {
+  margin-top: 6px;
+}
+
+/* Zurueck / Weiter */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.navigation button {
+  font: inherit;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+/* Ausgegraut und nicht klickbar, wenn es kein Zurueck/Weiter mehr gibt. */
+.navigation button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
