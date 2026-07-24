@@ -62,6 +62,7 @@ export function Lesson_ScriptsHooksMCP() {
       <p>{t("shm.hook.p3")}</p>
       <p>{t("shm.hook.p4")}</p>
       <p>{t("shm.hook.p5")}</p>
+      <p>{t("shm.hook.p6")}</p>
 
       {/* --- 3. MCP-Server / MCP servers --------------------------------- */}
       <h4>{t("shm.mcp.h")}</h4>

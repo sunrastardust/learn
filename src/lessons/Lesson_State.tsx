@@ -1,10 +1,10 @@
 // Was macht diese Datei?
-// Lektion 3: STATE mit useState. "State" ist das Gedaechtnis einer Komponente.
+// STATE mit useState. "State" ist das Gedaechtnis einer Komponente.
 // Aendert sich der State, zeichnet React die Komponente automatisch neu -- so
 // bleibt das, was du siehst, immer aktuell.
 //
 // What does this file do?
-// Lesson 3: STATE with useState. "State" is a component's memory. When the
+// STATE with useState. "State" is a component's memory. When the
 // state changes, React automatically re-renders the component -- so what you
 // see always stays up to date.
 
@@ -35,7 +35,7 @@ function Counter() {
 render(<Counter />);
 `;
 
-export function Lesson3_State() {
+export function Lesson_State() {
   const { t } = useLanguage();
 
   // useState(0) gibt ein Paar zurueck:

@@ -1,11 +1,11 @@
 // Was macht diese Datei?
-// Lektion 1: Sie erklaert, was eine KOMPONENTE ist und wie JSX aussieht.
+// Diese Lektion erklaert, was eine KOMPONENTE ist und wie JSX aussieht.
 // Eine Komponente ist einfach eine Funktion, die JSX zurueckgibt. JSX sieht
 // aus wie HTML, ist aber JavaScript -- deshalb koennen wir mittendrin mit
 // geschweiften Klammern { } echten Code einsetzen.
 //
 // What does this file do?
-// Lesson 1: it explains what a COMPONENT is and what JSX looks like.
+// This lesson explains what a COMPONENT is and what JSX looks like.
 // A component is simply a function that returns JSX. JSX looks like HTML but
 // is JavaScript -- that's why we can drop real code right into it using curly
 // braces { }.
@@ -35,7 +35,7 @@ render(<Example />);
 // beginnt (Pflicht in React -- daran erkennt React eine Komponente).
 // A component is a function whose name starts with a CAPITAL letter
 // (mandatory in React -- that is how React recognises a component).
-export function Lesson1_ComponentsJSX() {
+export function Lesson_ComponentsJSX() {
   // t() liefert die Texte in der aktuellen Sprache (DE/EN).
   // t() returns the texts in the current language (DE/EN).
   const { t } = useLanguage();

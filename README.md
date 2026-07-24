@@ -136,7 +136,7 @@ react-lernpfad/
    │  └─ LanguageSwitcher.tsx # die DE/EN-Umschaltung oben rechts
    └─ lessons/             # eine Datei je Lektion + die Reihenfolge
       ├─ lessons.ts        #   das Array aller Lektionen (der Lernpfad)
-      ├─ Lesson1_ComponentsJSX.tsx ... Lesson4_Events.tsx
+      ├─ Lesson_ComponentsJSX.tsx, Lesson_Props.tsx, ...
       └─ Lesson_*.tsx      #   die uebrigen Lektions-Komponenten
 ```
 
@@ -233,11 +233,13 @@ dem Prinzip **"so wenig Kontext wie moeglich, so viel wie noetig"**:
 | Agents | `agents/*.agent.md` | `project` = guenstiger Router (Haiku), delegiert an `ui`/`logic` (Sonnet) oder `docs` (Haiku) |
 | Skills | `skills/*/SKILL.md` | Prozedur-Wissen auf Abruf (`new-lesson`, `i18n-check`) |
 | Prompts | `prompts/*.prompt.md` | gespeicherte Anfrage-Vorlagen, im Chat per `/name` (`/new-lesson`, `/explain`) |
-| Hooks | `agents/logic.agent.md` (Agent-Hook, Preview) · `.githooks/pre-commit` (git-Hook) | fuehren `check:i18n` automatisch aus – sanfter Hinweis bzw. harte Sperre (siehe Lektion 18) |
+| Hooks | `.claude/settings.json` (Claude-Code Pre/PostToolUse, sofort aktiv) · `agents/logic.agent.md` (Copilot PostToolUse, Preview) · `.githooks/pre-commit` (git-Hook) | laufen automatisch rund um Werkzeuge bzw. Commits (siehe Lektion 18) |
 
-Den git-Hook einmalig aktivieren: `git config core.hooksPath .githooks`
-(unter macOS/Linux ggf. `chmod +x .githooks/pre-commit`). Den Agent-Hook
-schaltet in VS Code die Einstellung `chat.useCustomAgentHooks` frei.
+Die Claude-Code-Hooks (`.claude/settings.json`) feuern sofort, sobald du das
+Repo mit Claude Code oeffnest. Den git-Hook einmalig aktivieren:
+`git config core.hooksPath .githooks` (unter macOS/Linux ggf.
+`chmod +x .githooks/pre-commit`). Den Copilot-Agent-Hook schaltet in VS Code
+die Einstellung `chat.useCustomAgentHooks` frei.
 
 Benutzung: In VS Code den Copilot-Chat oeffnen, Agent **project** waehlen und
 eine Aufgabe stellen – der Router delegiert an den passenden Spezialisten.
@@ -382,7 +384,7 @@ react-lernpfad/
    │  └─ LanguageSwitcher.tsx # the DE/EN switch (top right)
    └─ lessons/             # one file per lesson + the order
       ├─ lessons.ts        #   the array of all lessons (the learning path)
-      ├─ Lesson1_ComponentsJSX.tsx ... Lesson4_Events.tsx
+      ├─ Lesson_ComponentsJSX.tsx, Lesson_Props.tsx, ...
       └─ Lesson_*.tsx      #   the remaining lesson components
 ```
 
@@ -478,11 +480,13 @@ principle **"as little context as possible, as much as needed"**:
 | Agents | `agents/*.agent.md` | `project` = cheap router (Haiku), delegates to `ui`/`logic` (Sonnet) or `docs` (Haiku) |
 | Skills | `skills/*/SKILL.md` | procedural knowledge on demand (`new-lesson`, `i18n-check`) |
 | Prompts | `prompts/*.prompt.md` | saved request templates, invoked in chat via `/name` (`/new-lesson`, `/explain`) |
-| Hooks | `agents/logic.agent.md` (agent hook, preview) · `.githooks/pre-commit` (git hook) | run `check:i18n` automatically – a gentle hint resp. a hard gate (see lesson 18) |
+| Hooks | `.claude/settings.json` (Claude Code Pre/PostToolUse, active immediately) · `agents/logic.agent.md` (Copilot PostToolUse, preview) · `.githooks/pre-commit` (git hook) | run automatically around tools resp. commits (see lesson 18) |
 
-Activate the git hook once: `git config core.hooksPath .githooks`
-(on macOS/Linux maybe `chmod +x .githooks/pre-commit`). The agent hook is
-unlocked in VS Code by the `chat.useCustomAgentHooks` setting.
+The Claude Code hooks (`.claude/settings.json`) fire as soon as you open the
+repo with Claude Code. Activate the git hook once:
+`git config core.hooksPath .githooks` (on macOS/Linux maybe
+`chmod +x .githooks/pre-commit`). The Copilot agent hook is unlocked in VS Code
+by the `chat.useCustomAgentHooks` setting.
 
 Usage: open Copilot Chat in VS Code, pick the **project** agent and give it a
 task – the router delegates to the right specialist. You can also pick a

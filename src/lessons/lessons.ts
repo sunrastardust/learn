@@ -19,10 +19,10 @@ import { Lesson_Introduction } from "./Lesson_Introduction";
 import { Lesson_ReactStructure } from "./Lesson_ReactStructure";
 import { Lesson_AboutThisProject } from "./Lesson_AboutThisProject";
 import { Lesson_ToolsAndMap } from "./Lesson_ToolsAndMap";
-import { Lesson1_ComponentsJSX } from "./Lesson1_ComponentsJSX";
-import { Lesson2_Props } from "./Lesson2_Props";
-import { Lesson3_State } from "./Lesson3_State";
-import { Lesson4_Events } from "./Lesson4_Events";
+import { Lesson_ComponentsJSX } from "./Lesson_ComponentsJSX";
+import { Lesson_Props } from "./Lesson_Props";
+import { Lesson_State } from "./Lesson_State";
+import { Lesson_Events } from "./Lesson_Events";
 import { Lesson_ConditionalRendering } from "./Lesson_ConditionalRendering";
 import { Lesson_ListsKeys } from "./Lesson_ListsKeys";
 import { Lesson_SharedState } from "./Lesson_SharedState";
@@ -78,7 +78,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.komponenten.kurz",
     taskKey: "lektion.komponenten.aufgabe",
     groupKey: "gruppe.react",
-    Content: Lesson1_ComponentsJSX,
+    Content: Lesson_ComponentsJSX,
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.props.kurz",
     taskKey: "lektion.props.aufgabe",
     groupKey: "gruppe.react",
-    Content: Lesson2_Props,
+    Content: Lesson_Props,
   },
   {
     id: 7,
@@ -94,7 +94,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.state.kurz",
     taskKey: "lektion.state.aufgabe",
     groupKey: "gruppe.react",
-    Content: Lesson3_State,
+    Content: Lesson_State,
   },
   {
     id: 8,
@@ -102,7 +102,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.events.kurz",
     taskKey: "lektion.events.aufgabe",
     groupKey: "gruppe.react",
-    Content: Lesson4_Events,
+    Content: Lesson_Events,
   },
   {
     id: 9,

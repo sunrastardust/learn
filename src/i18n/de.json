@@ -19,19 +19,19 @@
 
   "lektion.komponenten.titel": "Komponenten & JSX",
   "lektion.komponenten.kurz": "Was eine Komponente ist und wie JSX aussieht.",
-  "lektion.komponenten.aufgabe": "Öffne src/lessons/Lesson1_ComponentsJSX.tsx und ändere den Text in der Variable `name` von \"Welt\" in deinen eigenen Namen. Speichern – der Browser aktualisiert sich von allein.",
+  "lektion.komponenten.aufgabe": "Öffne src/lessons/Lesson_ComponentsJSX.tsx und ändere den Text in der Variable `name` von \"Welt\" in deinen eigenen Namen. Speichern – der Browser aktualisiert sich von allein.",
 
   "lektion.props.titel": "Props",
   "lektion.props.kurz": "Werte an eine Komponente weitergeben.",
-  "lektion.props.aufgabe": "In src/lessons/Lesson2_Props.tsx: übergib einer <Greeting /> einen anderen Namen. Füge danach eine vierte <Greeting /> mit einem neuen Namen und einer `mood` deiner Wahl hinzu.",
+  "lektion.props.aufgabe": "In src/lessons/Lesson_Props.tsx: übergib einer <Greeting /> einen anderen Namen. Füge danach eine vierte <Greeting /> mit einem neuen Namen und einer `mood` deiner Wahl hinzu.",
 
   "lektion.state.titel": "State mit useState",
   "lektion.state.kurz": "Eine Komponente bekommt ein Gedächtnis.",
-  "lektion.state.aufgabe": "In src/lessons/Lesson3_State.tsx: ändere den Startwert in useState(0) auf 10. Baue dann einen dritten Button 'Zurücksetzen', der die Zahl mit setCount(0) wieder auf 0 stellt.",
+  "lektion.state.aufgabe": "In src/lessons/Lesson_State.tsx: ändere den Startwert in useState(0) auf 10. Baue dann einen dritten Button 'Zurücksetzen', der die Zahl mit setCount(0) wieder auf 0 stellt.",
 
   "lektion.events.titel": "Events & Eingaben",
   "lektion.events.kurz": "Ein Textfeld live mit State verbinden.",
-  "lektion.events.aufgabe": "In src/lessons/Lesson4_Events.tsx: zeige den eingegebenen Text zusätzlich in GROSSBUCHSTABEN an. Tipp: text.toUpperCase() wandelt einen Text in Großbuchstaben um.",
+  "lektion.events.aufgabe": "In src/lessons/Lesson_Events.tsx: zeige den eingegebenen Text zusätzlich in GROSSBUCHSTABEN an. Tipp: text.toUpperCase() wandelt einen Text in Großbuchstaben um.",
 
   "lektion.i18n.titel": "Mehrsprachigkeit mit JSON",
   "lektion.i18n.kurz": "Wie die DE/EN-Umschaltung funktioniert – und wie du sie erweiterst.",
@@ -80,7 +80,7 @@
   "mehr.beispiel.schluessel": "Der Schlüssel \"nav.weiter\" ergibt gerade:",
 
   "l1.hallo": "Hallo, {name}!",
-  "l1.p1": "Das hier ist deine erste Komponente. Alles was du siehst, kommt aus der Funktion Lesson1_ComponentsJSX.",
+  "l1.p1": "Das hier ist deine erste Komponente. Alles was du siehst, kommt aus der Funktion Lesson_ComponentsJSX.",
   "l1.p2": "In JSX kannst du mit geschweiften Klammern jederzeit JavaScript einsetzen. Beispiel: 2 + 3 =",
 
   "l2.h": "Dieselbe Komponente, andere Props",
@@ -427,11 +427,12 @@
   "shm.skript.faustregel": "Faustregel: Ist eine Aufgabe deterministisch (immer gleiches Ergebnis)? Dann als Skript – nicht als Modell-Denkarbeit. Genau dieses Skript ruft der Skill i18n-check auf.",
 
   "shm.hook.h": "Hooks – Regeln automatisch durchsetzen",
-  "shm.hook.p1": "Ein Hook ist ein Befehl, der bei einem EREIGNIS automatisch läuft – z. B. vor einem Commit, beim Speichern einer Datei oder nach einem Werkzeug-Aufruf des Agenten.",
+  "shm.hook.p1": "Ein Hook ist ein Befehl, der bei einem EREIGNIS automatisch läuft. Rund um die Werkzeuge eines Agenten sind die zwei wichtigsten Ereignisse PreToolUse (direkt VOR einem Werkzeug-Aufruf) und PostToolUse (direkt DANACH).",
   "shm.hook.p2": "Der Unterschied zu einer Instruction ist entscheidend: Eine Instruction SAGT dem Modell, es solle etwas tun – es kann das vergessen. Ein Hook TUT es automatisch – er kann nicht vergessen werden und kostet keine Modell-Tokens.",
-  "shm.hook.p3": "Dieses Repo hat einen echten Agent-Hook: In .github/agents/logic.agent.md läuft nach JEDER Datei-Änderung des logic-Agents ein PostToolUse-Hook, der scripts/i18n-hook.mjs aufruft. Das Skript meldet, falls de.json und en.json auseinanderlaufen – blockt aber NICHT (sanfter Hinweis während der Arbeit). Hinweis: Agent-Hooks sind aktuell ein Preview-Feature und brauchen die VS-Code-Einstellung chat.useCustomAgentHooks.",
-  "shm.hook.p4": "Dazu gibt es einen klassischen git-Hook: .githooks/pre-commit führt VOR jedem Commit npm run check:i18n aus und STOPPT den Commit bei Fehlern – die harte Sperre, wenn die Arbeit fertig ist. Einmal aktivieren mit: git config core.hooksPath .githooks. So kann auch ein Agent keine kaputten Übersetzungen einchecken. (Verwandt auf CI-Ebene: der Deploy-Workflow prüft dasselbe bei jedem Push.)",
-  "shm.hook.p5": "Merke den Unterschied: Der Agent-Hook ist ein sanfter Hinweis WÄHREND der Arbeit, der git-Hook eine harte Sperre BEIM Commit. Beide setzen dieselbe Regel durch – ohne dass Modell oder Mensch daran denken müssen.",
+  "shm.hook.p3": "Dieses Repo hat einen echten, sofort funktionierenden Agent-Hook für Claude Code – verdrahtet in .claude/settings.json. PreToolUse ruft VOR jedem Edit/Write scripts/pre-tool-guard.mjs auf: Es BLOCKT das Bearbeiten generierter Dateien (z. B. dist/, package-lock.json) und erinnert bei einer Sprachdatei an den Zwilling. PostToolUse ruft DANACH scripts/i18n-hook.mjs auf und prüft, ob de.json und en.json synchron bleiben. Beim Arbeiten mit Claude Code in diesem Repo feuern beide sofort.",
+  "shm.hook.p4": "Dasselbe Prinzip gibt es in GitHub Copilot (Preview): .github/agents/logic.agent.md deklariert einen PostToolUse-Hook, der scripts/i18n-hook.mjs aufruft (braucht die VS-Code-Einstellung chat.useCustomAgentHooks). Anderes Werkzeug, gleiche Idee.",
+  "shm.hook.p5": "Und als klassischer git-Hook: .githooks/pre-commit führt VOR jedem Commit npm run check:i18n aus und STOPPT den Commit bei Fehlern (einmal aktivieren: git config core.hooksPath .githooks). Verwandt auf CI-Ebene: der Deploy-Workflow prüft dasselbe bei jedem Push.",
+  "shm.hook.p6": "Die Kernidee: PreToolUse kann eine Aktion abfangen, BEVOR sie passiert – ein Wächter, der sogar blocken kann. PostToolUse reagiert DANACH (prüfen, aufräumen, erinnern). Zusammen mit dem git-Hook (Sperre beim Commit) ist dieselbe Regel an drei Stellen automatisch abgesichert – ohne dass Modell oder Mensch daran denken müssen.",
 
   "shm.mcp.h": "MCP-Server – die Werkzeuge erweitern",
   "shm.mcp.p1": "MCP steht für Model Context Protocol. Ein MCP-Server ist ein kleines Programm, das dem Agenten NEUE Werkzeuge gibt – z. B. Zugriff auf eine Datenbank, ein Ticketsystem, eine Web-Suche oder das Dateisystem.",

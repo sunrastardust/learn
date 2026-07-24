@@ -1,10 +1,10 @@
 // Was macht diese Datei?
-// Lektion 4: EVENTS & EINGABEN. Wir verbinden ein Textfeld (input) mit State.
+// EVENTS & EINGABEN. Wir verbinden ein Textfeld (input) mit State.
 // Tippst du etwas, laeuft bei jedem Zeichen die onChange-Funktion, die den
 // State aktualisiert. Der angezeigte Text ist damit immer live aktuell.
 //
 // What does this file do?
-// Lesson 4: EVENTS & INPUT. We wire a text field (input) to state. When you
+// EVENTS & INPUT. We wire a text field (input) to state. When you
 // type something, the onChange function runs on every character and updates
 // the state. The displayed text is therefore always live and up to date.
 
@@ -41,7 +41,7 @@ function LiveInput() {
 render(<LiveInput />);
 `;
 
-export function Lesson4_Events() {
+export function Lesson_Events() {
   const { t } = useLanguage();
 
   // Der State haelt den aktuellen Text des Eingabefelds. Startwert: leer.

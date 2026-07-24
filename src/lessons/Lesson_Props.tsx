@@ -1,10 +1,10 @@
 // Was macht diese Datei?
-// Lektion 2: PROPS. Props sind die "Argumente" einer Komponente -- damit gibt
+// PROPS. Props sind die "Argumente" einer Komponente -- damit gibt
 // eine Eltern-Komponente Werte an eine Kind-Komponente weiter. In TypeScript
 // beschreiben wir mit einem Typ genau, welche Props erlaubt sind.
 //
 // What does this file do?
-// Lesson 2: PROPS. Props are the "arguments" of a component -- a parent
+// PROPS. Props are the "arguments" of a component -- a parent
 // component uses them to pass values to a child component. In TypeScript we
 // use a type to describe exactly which props are allowed.
 
@@ -64,7 +64,7 @@ function Greeting({ name, mood = "neutral" }: GreetingProps) {
 // jedes Mal andere Props mit.
 // This lesson component uses <Greeting /> several times, passing different
 // props each time.
-export function Lesson2_Props() {
+export function Lesson_Props() {
   const { t } = useLanguage();
   return (
     <div>
