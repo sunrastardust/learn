@@ -33,7 +33,8 @@ const ALL_SKILLS = 1600; // beide Skills inline / both skills inline
 const SKILL_INDEX = 60; // nur die Kurzbeschreibungen / descriptions only
 const ROUTER_STEP = 500; // der Router liest die Anfrage / router reads request
 const PRICE_CHEAP = 1; // Haiku (relativ) / Haiku (relative)
-const PRICE_STRONG = 5; // Sonnet (relativ) / Sonnet (relative)
+const PRICE_STRONG = 5; // Sonnet -- was ein eigener Agent bewusst waehlt / what a custom agent deliberately picks
+const PRICE_PREMIUM = 10; // Opus -- das teure Picker-Modell der eingebauten Modi / the expensive picker model of the built-in modes
 
 // Womit arbeitet der Nutzer? Der eigene Agent (mit Router) oder ein
 // eingebauter Modus aus dem VS-Code-Picker.
@@ -142,17 +143,19 @@ export function Lesson_AgentSimulator() {
   const instructionCost = applyToOn ? scenario.instructions.length * PER_APPLYTO : ALL_APPLYTO;
   const skillCost = skillsOn ? (scenario.skill ? PER_SKILL : 0) + SKILL_INDEX : 0;
   // Nur der eigene Agent (Router) waehlt ein passendes, ggf. guenstiges Modell.
-  // Die eingebauten Modi nehmen immer das Modell aus dem Picker (hier: stark).
+  // Die eingebauten Modi nehmen das Modell aus dem Picker -- und das ist meist
+  // das teuerste (Opus-Klasse), weil man es selten extra herunterstellt.
   // Only the custom agent (router) picks a fitting, possibly cheap model.
-  // The built-in modes always take the picker model (here: strong).
-  const workPrice = mode === "custom" ? (scenario.strong ? PRICE_STRONG : PRICE_CHEAP) : PRICE_STRONG;
+  // The built-in modes take the picker model -- usually the most expensive one
+  // (Opus class), because people rarely dial it down.
+  const workPrice = mode === "custom" ? (scenario.strong ? PRICE_STRONG : PRICE_CHEAP) : PRICE_PREMIUM;
   const workCost = (base + ALWAYS_RULES + instructionCost + skillCost) * workPrice;
   const routerCost = mode === "custom" && isWork ? ROUTER_STEP * PRICE_CHEAP : 0;
   const setupPoints = routerCost + workCost;
 
-  // Referenz: ein einziger grosser Agent, alles immer im Kontext.
-  // Reference: one single big agent, everything always in context.
-  const naivePoints = (BASE_WORK + ALWAYS_RULES + ALL_APPLYTO + ALL_SKILLS) * PRICE_STRONG;
+  // Referenz: ein einziger grosser Agent, alles immer im Kontext, teures Modell.
+  // Reference: one single big agent, everything always in context, expensive model.
+  const naivePoints = (BASE_WORK + ALWAYS_RULES + ALL_APPLYTO + ALL_SKILLS) * PRICE_PREMIUM;
   const setupWidth = Math.max(3, Math.round((setupPoints / naivePoints) * 100));
 
   // Warnungen: fehlende Mechanismen ODER ein Modus, der nicht ideal passt.
