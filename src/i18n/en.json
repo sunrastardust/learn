@@ -429,8 +429,9 @@
   "shm.hook.h": "Hooks – enforcing rules automatically",
   "shm.hook.p1": "A hook is a command that runs automatically on an EVENT – e.g. before a commit, when a file is saved, or after a tool call by the agent.",
   "shm.hook.p2": "The difference from an instruction is crucial: an instruction TELLS the model to do something – it can forget. A hook DOES it automatically – it cannot be forgotten and costs no model tokens.",
-  "shm.hook.p3": "Example: a pre-commit hook that runs npm run check:i18n and blocks the commit if translations are missing. In VS Code, agents can also have their own hooks (hooks: in the agent file, currently preview), e.g. to run the linter automatically after every change.",
-  "shm.hook.p4": "Related and really present in this repo: the deploy workflow (.github/workflows/deploy.yml) is an automation at CI level – on every push, check:i18n and the build run automatically before publishing.",
+  "shm.hook.p3": "This repo has a real agent hook: in .github/agents/logic.agent.md a PostToolUse hook runs after EVERY file edit by the logic agent and calls scripts/i18n-hook.mjs. The script reports if de.json and en.json diverge – but does NOT block (a gentle hint during work). Note: agent hooks are currently a preview feature and need the VS Code setting chat.useCustomAgentHooks.",
+  "shm.hook.p4": "In addition there is a classic git hook: .githooks/pre-commit runs npm run check:i18n BEFORE every commit and BLOCKS the commit on errors – the hard gate once the work is done. Activate it once with: git config core.hooksPath .githooks. That way not even an agent can commit broken translations. (Related at CI level: the deploy workflow checks the same on every push.)",
+  "shm.hook.p5": "Note the difference: the agent hook is a gentle hint DURING the work, the git hook a hard gate AT commit time. Both enforce the same rule – without model or human having to remember.",
 
   "shm.mcp.h": "MCP servers – extending the tools",
   "shm.mcp.p1": "MCP stands for Model Context Protocol. An MCP server is a small program that gives the agent NEW tools – e.g. access to a database, a ticket system, a web search or the file system.",

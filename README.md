@@ -233,6 +233,11 @@ dem Prinzip **"so wenig Kontext wie moeglich, so viel wie noetig"**:
 | Agents | `agents/*.agent.md` | `project` = guenstiger Router (Haiku), delegiert an `ui`/`logic` (Sonnet) oder `docs` (Haiku) |
 | Skills | `skills/*/SKILL.md` | Prozedur-Wissen auf Abruf (`new-lesson`, `i18n-check`) |
 | Prompts | `prompts/*.prompt.md` | gespeicherte Anfrage-Vorlagen, im Chat per `/name` (`/new-lesson`, `/explain`) |
+| Hooks | `agents/logic.agent.md` (Agent-Hook, Preview) · `.githooks/pre-commit` (git-Hook) | fuehren `check:i18n` automatisch aus – sanfter Hinweis bzw. harte Sperre (siehe Lektion 18) |
+
+Den git-Hook einmalig aktivieren: `git config core.hooksPath .githooks`
+(unter macOS/Linux ggf. `chmod +x .githooks/pre-commit`). Den Agent-Hook
+schaltet in VS Code die Einstellung `chat.useCustomAgentHooks` frei.
 
 Benutzung: In VS Code den Copilot-Chat oeffnen, Agent **project** waehlen und
 eine Aufgabe stellen – der Router delegiert an den passenden Spezialisten.
@@ -473,6 +478,11 @@ principle **"as little context as possible, as much as needed"**:
 | Agents | `agents/*.agent.md` | `project` = cheap router (Haiku), delegates to `ui`/`logic` (Sonnet) or `docs` (Haiku) |
 | Skills | `skills/*/SKILL.md` | procedural knowledge on demand (`new-lesson`, `i18n-check`) |
 | Prompts | `prompts/*.prompt.md` | saved request templates, invoked in chat via `/name` (`/new-lesson`, `/explain`) |
+| Hooks | `agents/logic.agent.md` (agent hook, preview) · `.githooks/pre-commit` (git hook) | run `check:i18n` automatically – a gentle hint resp. a hard gate (see lesson 18) |
+
+Activate the git hook once: `git config core.hooksPath .githooks`
+(on macOS/Linux maybe `chmod +x .githooks/pre-commit`). The agent hook is
+unlocked in VS Code by the `chat.useCustomAgentHooks` setting.
 
 Usage: open Copilot Chat in VS Code, pick the **project** agent and give it a
 task – the router delegates to the right specialist. You can also pick a

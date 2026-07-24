@@ -4,6 +4,13 @@ description: Specialist for data and structure — lesson registry, TypeScript t
 model: Claude Sonnet 4.5
 tools: ['search', 'edit', 'execute/runInTerminal', 'execute/getTerminalOutput', 'read/problems']
 agents: []
+# Agent-Hook (Preview — needs the VS Code setting `chat.useCustomAgentHooks`).
+# PostToolUse runs after every file edit by THIS agent. Here a gentle,
+# non-blocking reminder to keep de.json and en.json in sync.
+hooks:
+  PostToolUse:
+    - type: command
+      command: "node scripts/i18n-hook.mjs"
 ---
 
 # logic — data & structure

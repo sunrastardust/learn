@@ -1,0 +1,22 @@
+#!/bin/sh
+# Was macht diese Datei? / What does this file do?
+# DE: Ein klassischer git-Hook. Er laeuft VOR jedem Commit und fuehrt
+#     "npm run check:i18n" aus. Schlaegt der Check fehl, wird der Commit
+#     GESTOPPT. Die harte Sperre, wenn die Arbeit fertig ist -- so kann auch
+#     ein Agent keine kaputten Uebersetzungen einchecken.
+# EN: A classic git hook. It runs BEFORE every commit and executes
+#     "npm run check:i18n". If the check fails, the commit is BLOCKED.
+#     The hard gate once the work is done -- so not even an agent can commit
+#     broken translations.
+#
+# Einmalige Aktivierung / one-time activation:
+#   git config core.hooksPath .githooks
+# (Unter macOS/Linux ggf. ausfuehrbar machen / on macOS/Linux make it executable:
+#   chmod +x .githooks/pre-commit)
+
+echo "pre-commit: i18n-Check / checking translations..."
+if ! npm run --silent check:i18n; then
+  echo "✗ Commit gestoppt: i18n-Check fehlgeschlagen. / Commit blocked: i18n check failed."
+  echo "  Bitte beheben und erneut committen. / Please fix and commit again."
+  exit 1
+fi
