@@ -32,6 +32,7 @@ import { Lesson_Roadmap } from "./Lesson_Roadmap";
 import { Lesson_AgentsIntro } from "./Lesson_AgentsIntro";
 import { Lesson_Mechanisms } from "./Lesson_Mechanisms";
 import { Lesson_AgentSimulator } from "./Lesson_AgentSimulator";
+import { Lesson_ScriptsHooksMCP } from "./Lesson_ScriptsHooksMCP";
 
 // `: Lesson[]` sagt TypeScript: ein Array aus Lesson-Objekten. Fehlt ein
 // Pflicht-Feld, gibt es sofort einen Fehler.
@@ -174,5 +175,13 @@ export const lessons: Lesson[] = [
     taskKey: "lektion.agsim.aufgabe",
     groupKey: "gruppe.agenten",
     Content: Lesson_AgentSimulator,
+  },
+  {
+    id: 18,
+    titleKey: "lektion.shm.titel",
+    summaryKey: "lektion.shm.kurz",
+    taskKey: "lektion.shm.aufgabe",
+    groupKey: "gruppe.agenten",
+    Content: Lesson_ScriptsHooksMCP,
   },
 ];

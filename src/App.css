@@ -726,6 +726,48 @@
   margin-top: 6px;
 }
 
+/* --- Token-Vergleich (Lektion 18) / token comparison (lesson 18) ---
+   Zwei Balken: Modell-Denkarbeit (gross) vs. Skript (winzig). Breiten
+   illustrativ. / Two bars: model reasoning (big) vs. script (tiny). Widths
+   illustrative. */
+.tokencmp {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 4px 0 16px;
+}
+.tokencmp-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) 2fr;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+}
+@media (max-width: 720px) {
+  .tokencmp-row {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+}
+.tokencmp-track {
+  background: var(--code-bg);
+  border-radius: 6px;
+  height: 16px;
+  overflow: hidden;
+}
+.tokencmp-bar {
+  height: 100%;
+  border-radius: 6px;
+  background: var(--accent);
+}
+.tokencmp-bar.big {
+  width: 100%;
+}
+.tokencmp-bar.small {
+  width: 5%;
+  min-width: 6px;
+}
+
 /* --- Live-Playground (Basics-Lektionen) / live playground (basics lessons) --- */
 .playground {
   border: 1px solid var(--accent-border);

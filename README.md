@@ -110,7 +110,7 @@ veraendert die echten Projekt-Dateien nie.
 
 ```
 react-lernpfad/
-├─ .github/                # GitHub-Copilot-Agent-Setup (siehe Lektionen 15-17)
+├─ .github/                # GitHub-Copilot-Agent-Setup (siehe Lektionen 15-18)
 │  ├─ copilot-instructions.md   # Grundregeln, IMMER geladen -> kurz halten
 │  ├─ instructions/        # Bereichs-Regeln, nur bei applyTo-Treffern geladen
 │  ├─ agents/              # project (Router, guenstig) + ui / logic / docs
@@ -166,6 +166,7 @@ sind zweisprachig. TypeScript-Besonderheiten werden an Ort und Stelle erklaert.
 15. **KI-Agenten: Einfuehrung** – wie ein Agent-System grundsaetzlich funktioniert.
 16. **Mechanismen im Vergleich** – Instructions, Skills oder Agent: wann nimmt man was?
 17. **Agent-Setup: Simulator** – das Copilot-Setup dieses Repos interaktiv testen.
+18. **Skripte, Hooks & MCP** – den Agenten effizienter (Tokens) und maechtiger machen.
 
 ## Mehrsprachigkeit (DE/EN)
 
@@ -238,7 +239,7 @@ eine Aufgabe stellen – der Router delegiert an den passenden Spezialisten.
 Spezialisten lassen sich auch jederzeit direkt waehlen; ohne gewaehlten Agent
 gilt das Modell aus dem Model-Picker.
 Erklaerung, Mechanismen-Vergleich und interaktiver Simulator:
-**Lektionen 15–17** in der App.
+**Lektionen 15–18** in der App.
 Hinweis: Die `.github`-Dateien sind bewusst einsprachig (englisch) und knapp –
 sie kosten bei jedem Auftrag Tokens; die zweisprachige Doku steht hier.
 
@@ -350,7 +351,7 @@ the start at any time. This sandbox never touches the real project files.
 
 ```
 react-lernpfad/
-├─ .github/                # GitHub Copilot agent setup (see lessons 15-17)
+├─ .github/                # GitHub Copilot agent setup (see lessons 15-18)
 │  ├─ copilot-instructions.md   # base rules, ALWAYS loaded -> keep short
 │  ├─ instructions/        # area rules, loaded only on applyTo matches
 │  ├─ agents/              # project (router, cheap) + ui / logic / docs
@@ -406,6 +407,7 @@ bilingual, too. TypeScript specifics are explained right where they appear.
 15. **AI agents: introduction** – how an agent system fundamentally works.
 16. **Mechanisms compared** – instructions, skills or agent: when do you use which?
 17. **Agent setup: simulator** – test this repo's Copilot setup interactively.
+18. **Scripts, hooks & MCP** – make the agent more efficient (tokens) and more capable.
 
 ## Multi-language (DE/EN)
 
@@ -476,7 +478,7 @@ Usage: open Copilot Chat in VS Code, pick the **project** agent and give it a
 task – the router delegates to the right specialist. You can also pick a
 specialist directly at any time; with no agent selected, the model from the
 model picker applies. Explanation and an
-interactive simulator: **lessons 15–17** in the app. Note: the `.github`
+interactive simulator: **lessons 15–18** in the app. Note: the `.github`
 files are deliberately single-language (English) and terse – they cost tokens
 on every request; the bilingual docs live here.
 

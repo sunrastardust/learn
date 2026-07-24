@@ -410,5 +410,42 @@
   "mech.b4.frage": "Is a recurring request",
   "mech.b5.frage": "Applies to absolutely everything",
 
-  "mech.fazit": "Honestly: for a project this size you could merge them. This setup separates them cleanly on purpose, because it is a teaching example. In a big repo with 20 rule areas it becomes a real advantage – which is exactly what the simulator in the next lesson shows you when you switch the applyTo toggle off."
+  "mech.fazit": "Honestly: for a project this size you could merge them. This setup separates them cleanly on purpose, because it is a teaching example. In a big repo with 20 rule areas it becomes a real advantage – which is exactly what the simulator in the next lesson shows you when you switch the applyTo toggle off.",
+
+  "lektion.shm.titel": "Scripts, hooks & MCP",
+  "lektion.shm.kurz": "Making the agent more efficient (tokens) and more capable.",
+  "lektion.shm.aufgabe": "Open scripts/check-i18n.mjs and the skill .github/skills/i18n-check. Think about it: which steps would the model otherwise have to do itself – and how expensive (in tokens) would that be? (Hint: both JSON files together are ~700 lines.)\nBonus: sketch a pre-commit hook that runs npm run check:i18n before every commit and blocks on errors.",
+
+  "shm.h": "Advanced: scripts, hooks & MCP",
+  "shm.p1": "A good agent setup does not stop at instructions, agents and skills. Three more building blocks make it more efficient (fewer tokens) and more capable (more abilities).",
+
+  "shm.skript.h": "Helper scripts – doing deterministic work cheaply",
+  "shm.skript.p1": "A script always does the same thing: same input → same result. The agent CALLS it instead of reasoning itself. That is exactly what saves tokens.",
+  "shm.skript.p2": "Example from this project: npm run check:i18n (scripts/check-i18n.mjs). Without the script, the model would have to read both language files – ~700 lines together – in full and compare all keys in its head. That costs many thousands of tokens and is error-prone. With the script: one command, one result line.",
+  "shm.skript.vorher": "Model compares all keys by hand",
+  "shm.skript.nachher": "Run the script + read 1 line",
+  "shm.skript.faustregel": "Rule of thumb: is a task deterministic (always the same result)? Then make it a script – not model reasoning. This exact script is what the i18n-check skill calls.",
+
+  "shm.hook.h": "Hooks – enforcing rules automatically",
+  "shm.hook.p1": "A hook is a command that runs automatically on an EVENT – e.g. before a commit, when a file is saved, or after a tool call by the agent.",
+  "shm.hook.p2": "The difference from an instruction is crucial: an instruction TELLS the model to do something – it can forget. A hook DOES it automatically – it cannot be forgotten and costs no model tokens.",
+  "shm.hook.p3": "Example: a pre-commit hook that runs npm run check:i18n and blocks the commit if translations are missing. In VS Code, agents can also have their own hooks (hooks: in the agent file, currently preview), e.g. to run the linter automatically after every change.",
+  "shm.hook.p4": "Related and really present in this repo: the deploy workflow (.github/workflows/deploy.yml) is an automation at CI level – on every push, check:i18n and the build run automatically before publishing.",
+
+  "shm.mcp.h": "MCP servers – extending the tools",
+  "shm.mcp.p1": "MCP stands for Model Context Protocol. An MCP server is a small program that gives the agent NEW tools – e.g. access to a database, a ticket system, a web search or the file system.",
+  "shm.mcp.p2": "Instead of building every tool yourself, you 'plug in' an MCP server. Its tools then appear in the agent's tools list (e.g. github/* for all tools of a GitHub server). That way the agent's capability grows without changing its base behaviour.",
+  "shm.mcp.p3": "In short: scripts and hooks make the agent more EFFICIENT, MCP servers make it more CAPABLE.",
+
+  "shm.tab.h": "The three building blocks at a glance",
+  "shm.tab.sp.baustein": "Building block",
+  "shm.tab.sp.zweck": "Purpose",
+  "shm.tab.sp.beispiel": "Example",
+  "shm.tab.skript": "Helper script",
+  "shm.tab.skript.zweck": "saves tokens: deterministic work written once",
+  "shm.tab.hook": "Hook",
+  "shm.tab.hook.zweck": "enforces rules automatically on events",
+  "shm.tab.mcp": "MCP server",
+  "shm.tab.mcp.zweck": "extends the agent's tools",
+  "shm.tab.mcp.beispiel": "e.g. GitHub or database server"
 }

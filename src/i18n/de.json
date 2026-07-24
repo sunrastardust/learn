@@ -410,5 +410,42 @@
   "mech.b4.frage": "Ist eine wiederkehrende Anfrage",
   "mech.b5.frage": "Gilt ausnahmslos für alles",
 
-  "mech.fazit": "Ehrlich gesagt: Für ein Projekt dieser Größe könnte man das zusammenlegen. Dieses Setup trennt bewusst sauber, weil es ein Lehrbeispiel ist. In einem großen Repo mit 20 Regelbereichen wird daraus ein echter Vorteil – genau das rechnet dir der Simulator in der nächsten Lektion vor, wenn du den applyTo-Schalter ausknipst."
+  "mech.fazit": "Ehrlich gesagt: Für ein Projekt dieser Größe könnte man das zusammenlegen. Dieses Setup trennt bewusst sauber, weil es ein Lehrbeispiel ist. In einem großen Repo mit 20 Regelbereichen wird daraus ein echter Vorteil – genau das rechnet dir der Simulator in der nächsten Lektion vor, wenn du den applyTo-Schalter ausknipst.",
+
+  "lektion.shm.titel": "Skripte, Hooks & MCP",
+  "lektion.shm.kurz": "Den Agenten effizienter (Tokens) und mächtiger machen.",
+  "lektion.shm.aufgabe": "Öffne scripts/check-i18n.mjs und den Skill .github/skills/i18n-check. Überlege: Welche Schritte müsste sonst das Modell selbst tun – und wie teuer (in Tokens) wäre das? (Tipp: beide JSON-Dateien haben zusammen ~700 Zeilen.)\nBonus: Skizziere einen pre-commit-Hook, der npm run check:i18n vor jedem Commit ausführt und bei Fehlern blockt.",
+
+  "shm.h": "Fortgeschritten: Skripte, Hooks & MCP",
+  "shm.p1": "Ein gutes Agent-Setup hört nicht bei Instructions, Agents und Skills auf. Drei weitere Bausteine machen es effizienter (weniger Tokens) und mächtiger (mehr Fähigkeiten).",
+
+  "shm.skript.h": "Hilfsskripte – deterministische Arbeit billig erledigen",
+  "shm.skript.p1": "Ein Skript macht immer dasselbe: gleicher Input → gleiches Ergebnis. Der Agent RUFT es auf, statt selbst nachzudenken. Genau das spart Tokens.",
+  "shm.skript.p2": "Beispiel aus diesem Projekt: npm run check:i18n (scripts/check-i18n.mjs). Ohne das Skript müsste das Modell beide Sprachdateien – zusammen ~700 Zeilen – komplett lesen und alle Schlüssel im Kopf vergleichen. Das kostet viele Tausend Tokens und ist fehleranfällig. Mit dem Skript: ein Befehl, eine Ergebniszeile.",
+  "shm.skript.vorher": "Modell vergleicht alle Schlüssel von Hand",
+  "shm.skript.nachher": "Skript ausführen + 1 Zeile lesen",
+  "shm.skript.faustregel": "Faustregel: Ist eine Aufgabe deterministisch (immer gleiches Ergebnis)? Dann als Skript – nicht als Modell-Denkarbeit. Genau dieses Skript ruft der Skill i18n-check auf.",
+
+  "shm.hook.h": "Hooks – Regeln automatisch durchsetzen",
+  "shm.hook.p1": "Ein Hook ist ein Befehl, der bei einem EREIGNIS automatisch läuft – z. B. vor einem Commit, beim Speichern einer Datei oder nach einem Werkzeug-Aufruf des Agenten.",
+  "shm.hook.p2": "Der Unterschied zu einer Instruction ist entscheidend: Eine Instruction SAGT dem Modell, es solle etwas tun – es kann das vergessen. Ein Hook TUT es automatisch – er kann nicht vergessen werden und kostet keine Modell-Tokens.",
+  "shm.hook.p3": "Beispiel: ein pre-commit-Hook, der npm run check:i18n ausführt und den Commit blockt, wenn Übersetzungen fehlen. In VS Code können auch Agents eigene Hooks haben (hooks: in der Agent-Datei, aktuell Preview), z. B. um nach jeder Änderung automatisch den Linter laufen zu lassen.",
+  "shm.hook.p4": "Verwandt und in diesem Repo real vorhanden: der Deploy-Workflow (.github/workflows/deploy.yml) ist eine Automatisierung auf CI-Ebene – bei jedem Push laufen check:i18n und der Build automatisch, bevor veröffentlicht wird.",
+
+  "shm.mcp.h": "MCP-Server – die Werkzeuge erweitern",
+  "shm.mcp.p1": "MCP steht für Model Context Protocol. Ein MCP-Server ist ein kleines Programm, das dem Agenten NEUE Werkzeuge gibt – z. B. Zugriff auf eine Datenbank, ein Ticketsystem, eine Web-Suche oder das Dateisystem.",
+  "shm.mcp.p2": "Statt jedes Werkzeug selbst zu bauen, 'steckt' man einen MCP-Server an. Seine Werkzeuge tauchen dann in der Tools-Liste des Agenten auf (z. B. github/* für alle Werkzeuge eines GitHub-Servers). So wächst die Fähigkeit des Agenten, ohne sein Grundverhalten zu ändern.",
+  "shm.mcp.p3": "Kurz: Skripte und Hooks machen den Agenten EFFIZIENTER, MCP-Server machen ihn FÄHIGER.",
+
+  "shm.tab.h": "Die drei Bausteine im Überblick",
+  "shm.tab.sp.baustein": "Baustein",
+  "shm.tab.sp.zweck": "Zweck",
+  "shm.tab.sp.beispiel": "Beispiel",
+  "shm.tab.skript": "Hilfsskript",
+  "shm.tab.skript.zweck": "spart Tokens: deterministische Arbeit einmal geschrieben",
+  "shm.tab.hook": "Hook",
+  "shm.tab.hook.zweck": "setzt Regeln automatisch bei Ereignissen durch",
+  "shm.tab.mcp": "MCP-Server",
+  "shm.tab.mcp.zweck": "erweitert die Werkzeuge des Agenten",
+  "shm.tab.mcp.beispiel": "z. B. GitHub- oder Datenbank-Server"
 }
