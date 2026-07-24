@@ -7,6 +7,9 @@
     "types": ["vite/client"],
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
+    /* Erlaubt das Importieren von .json-Dateien als typisierte Objekte --
+       brauchen wir fuer die Sprachdateien in src/i18n/. */
+    "resolveJsonModule": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",

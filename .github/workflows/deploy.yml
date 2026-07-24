@@ -1,0 +1,53 @@
+# Was macht diese Datei? / What does this file do?
+# DE: Baut die App bei jedem Push auf master/main und veroeffentlicht das
+#     Ergebnis (dist/) auf GitHub Pages. Kein manueller Schritt noetig.
+# EN: Builds the app on every push to master/main and publishes the result
+#     (dist/) to GitHub Pages. No manual step needed.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch: {} # erlaubt manuelles Ausloesen / allows manual runs
+
+# Rechte, die der Workflow fuer Pages braucht.
+# Permissions the workflow needs for Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Nie zwei Deployments gleichzeitig.
+# Never two deployments at once.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Sicherheitsnetz: Uebersetzungen pruefen, bevor gebaut wird.
+      # Safety net: check translations before building.
+      - run: npm run check:i18n
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

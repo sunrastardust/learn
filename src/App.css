@@ -1,42 +1,90 @@
 /* Was macht diese Datei?
    Das Aussehen (CSS) des Lernpfads. CSS ist kein React -- aber jede App
    braucht etwas Gestaltung. Die Farben kommen aus den Variablen in index.css
-   (z.B. var(--accent)), damit heller und dunkler Modus automatisch passen. */
+   (z.B. var(--accent)), damit heller und dunkler Modus automatisch passen.
 
-.lernpfad {
+   What does this file do?
+   The appearance (CSS) of the learning path. CSS is not React -- but every app
+   needs some styling. The colors come from the variables in index.css
+   (e.g. var(--accent)) so light and dark mode adapt automatically. */
+
+.app {
   text-align: left;
-  padding: 24px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-.kopf {
+/* Kopf: Titel links, Sprach-Umschalter rechts.
+   Header: title on the left, language switch on the right. */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
   margin-bottom: 24px;
 }
-.kopf p {
+.header p {
   color: var(--text);
 }
 
-/* Zwei Spalten: links die Liste (schmal), rechts der Inhalt (breit). */
-.raster {
+/* --- Sprach-Umschalter (oben rechts) / language switcher (top right) --- */
+.language-switcher {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.language-button {
+  font: inherit;
+  padding: 6px 14px;
+  border: none;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.language-button:hover {
+  background: var(--accent-bg);
+}
+/* Die aktive Sprache wird deutlich hervorgehoben.
+   The active language is clearly highlighted. */
+.language-button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Zwei Spalten: links die Liste (schmal), rechts der Inhalt (breit).
+   Two columns: the list on the left (narrow), the content on the right (wide). */
+.layout {
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 24px;
   align-items: start;
 }
-/* Auf schmalen Bildschirmen untereinander statt nebeneinander. */
+/* Auf schmalen Bildschirmen untereinander statt nebeneinander.
+   On narrow screens stacked instead of side by side. */
 @media (max-width: 720px) {
-  .raster {
+  .layout {
     grid-template-columns: 1fr;
   }
 }
 
-/* --- Lektions-Liste (links) --- */
-.liste {
+/* --- Lektions-Liste (links) / lesson list (left) --- */
+.lesson-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.liste-knopf {
+/* Gruppen-Ueberschrift in der Liste (z.B. "Stufe 1: React-Grundlagen").
+   Group heading in the list (e.g. "Stage 1: React basics"). */
+.list-group {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  margin: 10px 0 2px;
+}
+.list-button {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -49,17 +97,18 @@
   font: inherit;
   cursor: pointer;
 }
-.liste-knopf:hover {
+.list-button:hover {
   border-color: var(--accent-border);
 }
-/* Der aktive Eintrag wird hervorgehoben -- so sieht man den Fortschritt. */
-.liste-knopf.aktiv {
+/* Der aktive Eintrag wird hervorgehoben -- so sieht man den Fortschritt.
+   The active entry is highlighted -- that is how you see your progress. */
+.list-button.active {
   background: var(--accent-bg);
   border-color: var(--accent-border);
   color: var(--text-h);
   font-weight: 600;
 }
-.liste-nummer {
+.list-number {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -72,38 +121,39 @@
   flex-shrink: 0;
 }
 
-/* --- Inhalt (rechts) --- */
-.inhalt {
+/* --- Inhalt (rechts) / content (right) --- */
+.content {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px;
   background: var(--bg);
 }
-.fortschritt {
+.progress {
   font-size: 14px;
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
-.untertitel {
+.subtitle {
   color: var(--text);
   margin-bottom: 20px;
 }
 
-/* Die Box, in der das Live-Beispiel laeuft. */
-.beispiel {
+/* Die Box, in der das Live-Beispiel laeuft.
+   The box in which the live example runs. */
+.example {
   border: 1px dashed var(--accent-border);
   border-radius: 10px;
   padding: 16px 20px;
   margin-bottom: 20px;
 }
-.beispiel h3 {
+.example h3 {
   margin-top: 0;
   color: var(--text-h);
 }
-.beispiel button,
-.beispiel input {
+.example button,
+.example input {
   font: inherit;
   padding: 8px 14px;
   border-radius: 8px;
@@ -112,27 +162,607 @@
   color: var(--text-h);
   cursor: pointer;
 }
-.beispiel input {
+.example input {
   cursor: text;
   min-width: 220px;
 }
 
-/* Die gelbe Aufgaben-Box (wiederverwendbare Aufgabe-Komponente). */
-.aufgabe {
+/* Die Aufgaben-Box (wiederverwendbare Task-Komponente).
+   The task box (reusable Task component). */
+.task {
   border-left: 4px solid var(--accent);
   background: var(--accent-bg);
   padding: 12px 16px;
   border-radius: 0 8px 8px 0;
   margin-bottom: 20px;
 }
-.aufgabe strong {
+.task strong {
   color: var(--text-h);
 }
-.aufgabe p {
+.task p {
+  margin-top: 6px;
+  /* Zeilenumbrueche (\n) im Aufgaben-Text als echte Zeilen anzeigen.
+     Show line breaks (\n) in the task text as real lines. */
+  white-space: pre-line;
+}
+
+/* Textlastige Lektionen: etwas Luft zwischen Absaetzen und Listen.
+   Text-heavy lessons: some air between paragraphs and lists. */
+.lesson-text h3 {
+  margin-top: 0;
+  color: var(--text-h);
+}
+.lesson-text h4 {
+  margin: 16px 0 6px;
+  color: var(--text-h);
+}
+.lesson-text p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.lesson-text ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+.lesson-text li {
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+.lesson-text a {
+  color: var(--accent);
+}
+/* Tabellen (z.B. Werkzeuge, Landkarte). Der Scroll-Wrapper verhindert, dass
+   breite Tabellen auf schmalen Bildschirmen das Layout sprengen.
+   Tables (e.g. tools, map). The scroll wrapper keeps wide tables from
+   breaking the layout on narrow screens. */
+.table-scroll {
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+.lesson-text table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 15px;
+}
+.lesson-text th,
+.lesson-text td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.lesson-text th {
+  background: var(--code-bg);
+  color: var(--text-h);
+}
+
+/* --- Ablauf-Phasen (Lektion 12, useEffect) / flow phases (lesson 12) ------
+   Untereinander wie eine Zeitleiste: farbige Kante links, nummerierte
+   Schritte. Die Schleifen-Phase ist gestrichelt -- sie wiederholt sich.
+   Stacked like a timeline: coloured edge on the left, numbered steps.
+   The looping phase is dashed -- it repeats. */
+.phases {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.phase {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+}
+.phase-loop {
+  border-left-style: dashed;
+}
+.phase-title {
+  display: block;
+  color: var(--text-h);
+  margin-bottom: 8px;
+}
+/* Eigene Nummerierung statt der Standard-Ziffern: runde Badges.
+   Custom numbering instead of default digits: round badges. */
+.phase ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step;
+}
+.phase li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 7px;
+  line-height: 1.45;
+}
+.phase li:last-child {
+  margin-bottom: 0;
+}
+.phase li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  line-height: 19px;
+}
+
+/* Der Merksatz am Ende einer Lektion.
+   The mnemonic at the end of a lesson. */
+.merksatz {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  color: var(--text-h);
+}
+
+/* --- Mechanismen-Vergleich (Lektion 16) / mechanisms compared (lesson 16) ---
+   Drei Grafiken: Ausloeser-Karten, Fall-Liste, Entscheidungsbaum.
+   Three graphics: trigger cards, case list, decision tree. */
+
+/* Grafik 1: die drei Ausloeser nebeneinander.
+   Graphic 1: the three triggers side by side. */
+.mech-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (max-width: 720px) {
+  .mech-cards {
+    grid-template-columns: 1fr;
+  }
+}
+.mech-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.mech-card-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+.mech-card-trigger {
+  color: var(--text-h);
+  font-size: 17px;
+}
+.mech-card-question {
+  font-style: italic;
+}
+.mech-card-target {
+  align-self: flex-start;
+  margin: 4px 0;
+}
+.mech-card-life {
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Grafik 2: pro Aufgabe die geladenen Kontext-Chips (Farben wie im Simulator).
+   Graphic 2: the loaded context chips per task (colours as in the simulator). */
+.case-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.case-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 3px solid var(--accent-border);
+  padding: 8px 0 8px 12px;
+}
+.case-title {
+  color: var(--text-h);
+  font-weight: 600;
+}
+.case-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.case-note {
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* Grafik 3: Entscheidungsbaum -- Frage, Pfeil, Ziel.
+   Graphic 3: decision tree -- question, arrow, target. */
+.tree-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.tree-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+/* Auf schmalen Bildschirmen untereinander statt nebeneinander.
+   On narrow screens stacked instead of side by side. */
+@media (max-width: 720px) {
+  .tree-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .tree-arrow {
+    display: none;
+  }
+}
+.tree-question {
+  color: var(--text-h);
+}
+.tree-arrow {
+  color: var(--accent);
+  font-size: 18px;
+}
+.tree-target {
+  justify-self: end;
+}
+
+/* --- Agent-Simulator (Lektion 17) / agent simulator (lesson 17) --- */
+/* Die Erklaer-Box: worum es geht. / The explainer box: what this is about. */
+.sim-intro {
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.sim-intro strong {
+  color: var(--text-h);
+}
+.sim-intro p {
+  margin: 8px 0 0;
+}
+
+/* Die gewaehlte Anfrage als "Chat-Blase". Mindesthoehe, damit laengere und
+   kuerzere Titel das Layout nicht verschieben.
+   The chosen request as a "chat bubble". Minimum height so longer and
+   shorter titles don't shift the layout. */
+.sim-prompt {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  min-height: 3.2em;
+  box-sizing: border-box;
+}
+.sim-prompt-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.sim-prompt em {
+  color: var(--text-h);
+}
+
+/* Die Aufgaben-Knoepfe. / The task buttons. */
+.sim-scenarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.sim-button {
+  font: inherit;
+  font-size: 15px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+.sim-button:hover {
+  border-color: var(--accent-border);
+}
+.sim-button.active {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  font-weight: 600;
+}
+
+/* Die drei Mechanismus-Schalter -- untereinander in einer festen Spalte, damit
+   die Checkboxen nie umbrechen oder verspringen (egal welche Anfrage / Breite).
+   The three mechanism toggles -- stacked in a fixed column so the checkboxes
+   never wrap or jump around (whatever the request / width). */
+.sim-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+.sim-toggles-title {
+  color: var(--text-h);
+}
+.sim-toggles label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  /* fit-content: die Klickflaeche ist nur so breit wie Checkbox + Text.
+     fit-content: the click area is only as wide as checkbox + text. */
+  width: fit-content;
+}
+.sim-toggles input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Sofort-Feedback-Box direkt unter den Schaltern: zeigt die Auswirkung der
+   Auswahl an Ort und Stelle.
+   Immediate-feedback box right under the toggles: shows the effect of the
+   selection on the spot. */
+.sim-effect {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+.sim-effect-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+/* Die Ergebnis-Box mit dem Ablauf. / The result box with the flow. */
+.sim-box {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.sim-step {
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 10px 0 4px;
+}
+/* Feste Mindesthoehen fuer die wechselnden Text-Slots -- so springt beim
+   Umschalten der Szenarien nichts.
+   Fixed minimum heights for the changing text slots -- so nothing jumps
+   when switching scenarios. */
+.sim-decision {
+  /* Platz fuer zwei Zeilen: auch die laengeren "kein Router"-Texte passen,
+     ohne dass der Block waechst.
+     Room for two lines: even the longer "no router" texts fit without the
+     block growing. */
+  min-height: 3em;
+  margin-bottom: 4px;
+}
+.sim-reason {
+  min-height: 3.4em;
+  margin-bottom: 8px;
+}
+.sim-files {
+  min-height: 2.8em;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.sim-file {
+  margin-right: 6px;
+}
+
+/* Kontext-Chips: was geladen wurde. Mindesthoehe fuer bis zu zwei Reihen.
+   Context chips: what got loaded. Minimum height for up to two rows. */
+.sim-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+  min-height: 62px;
+}
+.sim-chips-note {
+  font-size: 13px;
+  color: var(--text);
+  align-self: center;
+}
+.chip {
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+.chip-always {
+  background: var(--code-bg);
+  color: var(--text-h);
+}
+.chip-applyto {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--text-h);
+}
+.chip-skill {
+  border-style: dashed;
+  border-color: var(--accent);
+  color: var(--text-h);
+}
+
+/* Warnungs-Slot: immer sichtbar (Warnungen ODER Ok-Zeile), feste Mindesthoehe,
+   damit die Feedback-Box beim Umschalten nicht in der Hoehe springt.
+   Warning slot: always visible (warnings OR ok line), fixed minimum height so
+   the feedback box does not jump in height when toggling. */
+.sim-warnings {
+  min-height: 1.5em;
+}
+.sim-warning {
+  color: #b45309;
+  margin-bottom: 6px;
+}
+.sim-warning:last-child {
+  margin-bottom: 0;
+}
+.sim-ok {
+  color: #15803d;
+}
+@media (prefers-color-scheme: dark) {
+  .sim-warning {
+    color: #fbbf24;
+  }
+  .sim-ok {
+    color: #4ade80;
+  }
+}
+
+/* Kosten-Balken. / Cost bars. */
+.sim-bar-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) 2fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.sim-bar {
+  background: var(--code-bg);
+  border-radius: 6px;
+  height: 16px;
+  overflow: hidden;
+}
+.sim-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+}
+.sim-bar-fill.setup {
+  background: var(--accent);
+}
+.sim-bar-fill.naive {
+  background: var(--border);
+}
+.sim-bar-value {
+  font-family: var(--mono);
+  font-size: 13px;
+  /* Feste Mindestbreite, rechtsbuendig -- die Balken ruckeln nicht, wenn die
+     Zahl laenger/kuerzer wird.
+     Fixed minimum width, right-aligned -- the bars don't wiggle when the
+     number gets longer/shorter. */
+  min-width: 64px;
+  text-align: right;
+}
+.sim-note {
+  font-size: 13px;
+  color: var(--text);
   margin-top: 6px;
 }
 
-/* Zurueck / Weiter */
+/* --- Live-Playground (Basics-Lektionen) / live playground (basics lessons) --- */
+.playground {
+  border: 1px solid var(--accent-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 16px;
+}
+.playground-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.playground-head strong {
+  color: var(--text-h);
+}
+.playground-reset {
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 12px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  background: var(--accent-bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+.playground-note {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+/* Der Editor: dunkles Code-Feld (Thema vsDark), lesbar in beiden App-Modi.
+   The editor: dark code area (vsDark theme), readable in both app modes. */
+.playground-editor {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.playground-editor pre,
+.playground-editor textarea {
+  font-family: var(--mono) !important;
+}
+.playground-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+/* Die Vorschau: Mindesthoehe, damit nichts springt, wenn der Inhalt wechselt.
+   The preview: minimum height so nothing jumps when the content changes. */
+.playground-preview {
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-height: 64px;
+  margin-bottom: 6px;
+}
+.playground-preview h3 {
+  margin-top: 0;
+}
+.playground-preview button,
+.playground-preview input {
+  font: inherit;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+.playground-preview input {
+  cursor: text;
+}
+/* Fehlermeldungen des Playgrounds -- Text statt Absturz.
+   Playground error messages -- text instead of a crash. */
+.playground-error {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  white-space: pre-wrap;
+  color: #b45309;
+}
+@media (prefers-color-scheme: dark) {
+  .playground-error {
+    color: #fbbf24;
+  }
+}
+
+/* Zurueck / Weiter -- Back / Next */
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -147,7 +777,8 @@
   color: var(--text-h);
   cursor: pointer;
 }
-/* Ausgegraut und nicht klickbar, wenn es kein Zurueck/Weiter mehr gibt. */
+/* Ausgegraut und nicht klickbar, wenn es kein Zurueck/Weiter mehr gibt.
+   Greyed out and not clickable when there is no more Back/Next. */
 .navigation button:disabled {
   opacity: 0.4;
   cursor: not-allowed;

@@ -2,7 +2,13 @@
    Globale Grund-Styles der ganzen Seite. Wichtig sind hier vor allem die
    FARB-VARIABLEN (--text, --bg, --accent, ...). Sie sind einmal fuer den
    hellen und einmal fuer den dunklen Modus definiert, damit die App in beiden
-   gut aussieht. In App.css benutzen wir sie mit var(--name). */
+   gut aussieht. In App.css benutzen wir sie mit var(--name).
+
+   What does this file do?
+   Global base styles for the whole page. The most important part here are the
+   COLOR VARIABLES (--text, --bg, --accent, ...). They are defined once for
+   light and once for dark mode, so the app looks good in both. In App.css we
+   use them with var(--name). */
 
 :root {
   --text: #6b6375;
@@ -10,9 +16,9 @@
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent: #d1602c;
+  --accent-bg: rgba(209, 96, 44, 0.12);
+  --accent-border: rgba(209, 96, 44, 0.35);
 
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -25,7 +31,9 @@
 }
 
 /* Der dunkle Modus: dieselben Variablen, andere Werte. Der Browser waehlt
-   automatisch je nach System-Einstellung. */
+   automatisch je nach System-Einstellung.
+   Dark mode: the same variables, different values. The browser picks
+   automatically based on the system setting. */
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -33,9 +41,9 @@
     --bg: #16171d;
     --border: #2e303a;
     --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
+    --accent: #d1602c;
+    --accent-bg: rgba(209, 96, 44, 0.18);
+    --accent-border: rgba(209, 96, 44, 0.42);
   }
 }
 
@@ -44,7 +52,7 @@ body {
 }
 
 #root {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -54,7 +62,8 @@ h3 {
   color: var(--text-h);
 }
 
-/* Inline-Code wie <code>useState</code> etwas hervorheben. */
+/* Inline-Code wie <code>useState</code> etwas hervorheben.
+   Give inline code like <code>useState</code> a subtle highlight. */
 code {
   font-family: var(--mono);
   font-size: 0.9em;

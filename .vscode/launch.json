@@ -1,0 +1,41 @@
+{
+  // Was macht diese Datei? / What does this file do?
+  // DE: Sie beschreibt, was beim Druecken von F5 ("Start Debugging") passiert.
+  //     Erst startet der Dev-Server (preLaunchTask "dev-server"), dann oeffnet
+  //     sich der Browser mit angehaengtem Debugger. So kannst du Breakpoints
+  //     direkt in den .tsx-Dateien setzen.
+  // EN: It describes what happens when you press F5 ("Start Debugging").
+  //     First the dev server starts (preLaunchTask "dev-server"), then the
+  //     browser opens with the debugger attached. That way you can set
+  //     breakpoints directly in the .tsx files.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // DE: Variante 1: Google Chrome. Steht oben im Dropdown -> Standard.
+      // EN: Option 1: Google Chrome. First in the dropdown -> default.
+      "type": "chrome",
+      "request": "launch",
+      "name": "Lernpfad im Chrome debuggen / Debug in Chrome",
+      // DE: Adresse des Vite-Dev-Servers. / EN: Address of the Vite dev server.
+      "url": "http://localhost:5173",
+      // DE: webRoot verbindet Browser-Dateien mit deinen Quelldateien, damit
+      //     Breakpoints in src/ funktionieren.
+      // EN: webRoot links browser files to your source files so breakpoints
+      //     in src/ work.
+      "webRoot": "${workspaceFolder}",
+      // DE: Startet zuerst den Dev-Server-Task aus tasks.json.
+      // EN: First runs the dev-server task from tasks.json.
+      "preLaunchTask": "dev-server"
+    },
+    {
+      // DE: Variante 2: Microsoft Edge (unter Windows immer vorhanden).
+      // EN: Option 2: Microsoft Edge (always available on Windows).
+      "type": "msedge",
+      "request": "launch",
+      "name": "Lernpfad im Edge debuggen / Debug in Edge",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "dev-server"
+    }
+  ]
+}

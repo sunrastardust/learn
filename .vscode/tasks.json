@@ -1,0 +1,41 @@
+{
+  // Was macht diese Datei? / What does this file do?
+  // DE: Sie definiert "Tasks" (Aufgaben), die VS Code ausfuehren kann.
+  //     Wichtig hier: der Dev-Server. Die Debug-Konfiguration in launch.json
+  //     startet diesen Task automatisch, BEVOR der Browser aufgeht.
+  // EN: It defines "tasks" VS Code can run. The important one here: the dev
+  //     server. The debug configuration in launch.json runs this task
+  //     automatically BEFORE the browser opens.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // DE: Dieser Name wird in launch.json als "preLaunchTask" referenziert.
+      // EN: This name is referenced in launch.json as "preLaunchTask".
+      "label": "dev-server",
+      "type": "npm",
+      "script": "dev",
+      // DE: Der Server laeuft dauerhaft weiter -> Hintergrund-Task.
+      // EN: The server keeps running -> background task.
+      "isBackground": true,
+      "problemMatcher": {
+        // DE: Der Hintergrund-Matcher sagt VS Code, WANN der Server bereit
+        //     ist, damit der Browser erst dann startet ("ready in ...").
+        // EN: The background matcher tells VS Code WHEN the server is ready
+        //     so the browser only starts then ("ready in ...").
+        "owner": "vite",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "ready in"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ]
+}
