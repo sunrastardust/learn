@@ -640,20 +640,75 @@
   font-size: 14px;
 }
 .sim-bar {
+  position: relative;
   background: var(--code-bg);
   border-radius: 6px;
   height: 16px;
   overflow: hidden;
 }
+/* Die Fuellungen liegen absolut uebereinander: heller "range"-Balken hinten,
+   solider Balken davor (Untergrenze). So zeigt sich die Bandbreite.
+   The fills stack absolutely: light "range" bar behind, solid bar in front
+   (lower bound). This shows the range. */
 .sim-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
   border-radius: 6px;
+}
+.sim-bar-fill.range {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  box-sizing: border-box;
 }
 .sim-bar-fill.setup {
   background: var(--accent);
 }
 .sim-bar-fill.naive {
   background: var(--border);
+}
+
+/* Kontroll-Karte: Modell / Werkzeuge / Fokus -- fest vs. ungewiss.
+   Control card: model / tools / focus -- fixed vs. undetermined. */
+.sim-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+.sim-ctrl-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+}
+@media (max-width: 720px) {
+  .sim-ctrl-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+.sim-ctrl-dim {
+  color: var(--text);
+}
+.sim-ctrl-val.fixed {
+  color: #15803d;
+}
+.sim-ctrl-val.gamble {
+  color: #b45309;
+}
+@media (prefers-color-scheme: dark) {
+  .sim-ctrl-val.fixed {
+    color: #4ade80;
+  }
+  .sim-ctrl-val.gamble {
+    color: #fbbf24;
+  }
 }
 .sim-bar-value {
   font-family: var(--mono);

@@ -1,20 +1,19 @@
 // Was macht diese Datei?
 // Die Lektion "Agent-Setup: Simulator". Sie macht das Copilot-Setup unter
-// .github/ ERLEBBAR: Der Nutzer stellt (simuliert) eine Anfrage an Copilot,
-// waehlt WOMIT er arbeitet (eigener Agent oder ein eingebauter Modus) und
-// verfolgt in vier festen Schritten, was hinter den Kulissen passiert --
-// samt Kostenvergleich. Es laeuft keine echte KI; alles ist nachgestellt.
-// Wichtig fuers Layout: Alle Bereiche sind IMMER da (feste Slots mit
-// Mindesthoehen) -- so springt die Seite beim Umschalten nicht.
+// .github/ ERLEBBAR: Der Nutzer stellt (simuliert) eine Anfrage, waehlt WOMIT
+// er arbeitet (eigener Agent oder ein eingebauter Modus) und sieht, was
+// FESTGELEGT ist (Modell, Werkzeuge, Fokus) und was das kostet. Kernaussage:
+// Ein eigener Agent legt alles bewusst fest; bei einem eingebauten Modus
+// haengt es vom Picker ab -- das Modell kann zu teuer ODER zu schwach sein.
+// Es laeuft keine echte KI; alles ist nachgestellt.
 //
 // What does this file do?
 // The "Agent setup: simulator" lesson. It makes the Copilot setup under
-// .github/ TANGIBLE: the user (simulated) sends a request to Copilot, chooses
-// WHAT they work with (a custom agent or a built-in mode) and follows in four
-// fixed steps what happens behind the scenes -- including a cost comparison.
-// No real AI runs; everything is staged.
-// Important for the layout: all areas are ALWAYS present (fixed slots with
-// minimum heights) -- so the page does not jump when switching.
+// .github/ TANGIBLE: the user (simulated) sends a request, chooses WHAT they
+// work with (a custom agent or a built-in mode) and sees what is FIXED (model,
+// tools, focus) and what it costs. Core message: a custom agent deliberately
+// fixes everything; with a built-in mode it depends on the picker -- the model
+// may be too expensive OR too weak. No real AI runs; everything is staged.
 
 import { useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext";
@@ -32,20 +31,32 @@ const PER_SKILL = 800; // ein Skill-Inhalt / one skill body
 const ALL_SKILLS = 1600; // beide Skills inline / both skills inline
 const SKILL_INDEX = 60; // nur die Kurzbeschreibungen / descriptions only
 const ROUTER_STEP = 500; // der Router liest die Anfrage / router reads request
-const PRICE_CHEAP = 1; // Haiku (relativ) / Haiku (relative)
-const PRICE_STRONG = 5; // Sonnet -- was ein eigener Agent bewusst waehlt / what a custom agent deliberately picks
-const PRICE_PREMIUM = 10; // Opus -- das teure Picker-Modell der eingebauten Modi / the expensive picker model of the built-in modes
+// Relative Modellpreise. Ein eigener Agent legt ein PASSENDES fest (guenstig
+// ODER stark, je nach Aufgabe). Ein eingebauter Modus nimmt, was im Picker
+// steht -- irgendwo zwischen diesen Enden, und man waehlt es nicht bewusst.
+// Relative model prices. A custom agent fixes a FITTING one (cheap OR strong,
+// depending on the task). A built-in mode takes whatever is in the picker --
+// somewhere between these ends, and you don't choose it deliberately.
+const PRICE_CHEAP = 1; // Haiku
+const PRICE_STRONG = 5; // Sonnet
+const PRICE_PREMIUM = 10; // Opus
 
-// Womit arbeitet der Nutzer? Der eigene Agent (mit Router) oder ein
-// eingebauter Modus aus dem VS-Code-Picker.
-// What does the user work with? The custom agent (with router) or a built-in
-// mode from the VS Code picker.
 type Mode = "custom" | "agent" | "ask";
 
 const modeButtons: { id: Mode; labelKey: string }[] = [
   { id: "custom", labelKey: "sim.modus.custom" },
   { id: "agent", labelKey: "sim.modus.agent" },
   { id: "ask", labelKey: "sim.modus.ask" },
+];
+
+// Die drei Dinge, die ein eigener Agent festlegt -- und die bei einem
+// eingebauten Modus offen bleiben.
+// The three things a custom agent fixes -- and that stay open with a
+// built-in mode.
+const controlRows = [
+  { labelKey: "sim.ctrl.modell", customKey: "sim.ctrl.modell.custom", builtinKey: "sim.ctrl.modell.builtin" },
+  { labelKey: "sim.ctrl.tools", customKey: "sim.ctrl.tools.custom", builtinKey: "sim.ctrl.tools.builtin" },
+  { labelKey: "sim.ctrl.scope", customKey: "sim.ctrl.scope.custom", builtinKey: "sim.ctrl.scope.builtin" },
 ];
 
 // Ein Szenario beschreibt eine Beispiel-Anfrage und wie das Setup reagiert.
@@ -123,8 +134,6 @@ const scenarios: Scenario[] = [
 export function Lesson_AgentSimulator() {
   const { t } = useLanguage();
 
-  // State: gewaehltes Szenario, gewaehlter Modus, zwei Mechanismus-Schalter.
-  // State: chosen scenario, chosen mode, two mechanism toggles.
   const [activeId, setActiveId] = useState("s1");
   const [mode, setMode] = useState<Mode>("custom");
   const [applyToOn, setApplyToOn] = useState(true);
@@ -132,38 +141,44 @@ export function Lesson_AgentSimulator() {
 
   const scenario = scenarios.find((s) => s.id === activeId) ?? scenarios[0];
   const isWork = scenario.agent !== null; // Arbeit vs. reine Frage / work vs. pure question
+  const isBuiltin = mode !== "custom"; // eingebauter Modus? / a built-in mode?
 
   // --- Kosten berechnen / compute the cost --------------------------------
-  // Der Ask-Modus unterhaelt sich nur (kein autonomes Durchsuchen der
-  // Codebasis), darum die kleinere Basis. / Ask mode only converses (no
-  // autonomous codebase scan), hence the smaller base.
+  // Der Ask-Modus unterhaelt sich nur, darum die kleinere Basis.
+  // Ask mode only converses, hence the smaller base.
   const base = mode === "ask" ? BASE_QUESTION : isWork ? BASE_WORK : BASE_QUESTION;
   // applyTo & Skills gelten in JEDEM Modus (agentenunabhaengig, siehe Lekt. 16).
   // applyTo & skills apply in EVERY mode (agent-independent, see lesson 16).
   const instructionCost = applyToOn ? scenario.instructions.length * PER_APPLYTO : ALL_APPLYTO;
   const skillCost = skillsOn ? (scenario.skill ? PER_SKILL : 0) + SKILL_INDEX : 0;
-  // Nur der eigene Agent (Router) waehlt ein passendes, ggf. guenstiges Modell.
-  // Die eingebauten Modi nehmen das Modell aus dem Picker -- und das ist meist
-  // das teuerste (Opus-Klasse), weil man es selten extra herunterstellt.
-  // Only the custom agent (router) picks a fitting, possibly cheap model.
-  // The built-in modes take the picker model -- usually the most expensive one
-  // (Opus class), because people rarely dial it down.
-  const workPrice = mode === "custom" ? (scenario.strong ? PRICE_STRONG : PRICE_CHEAP) : PRICE_PREMIUM;
-  const workCost = (base + ALWAYS_RULES + instructionCost + skillCost) * workPrice;
+  const ctxSum = base + ALWAYS_RULES + instructionCost + skillCost;
   const routerCost = mode === "custom" && isWork ? ROUTER_STEP * PRICE_CHEAP : 0;
-  const setupPoints = routerCost + workCost;
 
-  // Referenz: ein einziger grosser Agent, alles immer im Kontext, teures Modell.
-  // Reference: one single big agent, everything always in context, expensive model.
+  // Eigener Agent: EIN fester Preis (passendes Modell). Eingebauter Modus:
+  // eine BANDBREITE -- vom guenstigsten bis zum teuersten Picker-Modell.
+  // Custom agent: ONE fixed price (fitting model). Built-in mode: a RANGE --
+  // from the cheapest to the most expensive picker model.
+  let costMin: number;
+  let costMax: number;
+  if (mode === "custom") {
+    const price = scenario.strong ? PRICE_STRONG : PRICE_CHEAP;
+    costMin = ctxSum * price + routerCost;
+    costMax = costMin;
+  } else {
+    costMin = ctxSum * PRICE_CHEAP;
+    costMax = ctxSum * PRICE_PREMIUM;
+  }
+  const isRange = costMin !== costMax;
+
+  // Referenz-Obergrenze: alles immer geladen, teures Modell.
+  // Reference upper bound: everything always loaded, expensive model.
   const naivePoints = (BASE_WORK + ALWAYS_RULES + ALL_APPLYTO + ALL_SKILLS) * PRICE_PREMIUM;
-  const setupWidth = Math.max(3, Math.round((setupPoints / naivePoints) * 100));
+  const minWidth = Math.max(2, Math.round((costMin / naivePoints) * 100));
+  const maxWidth = Math.max(minWidth, Math.round((costMax / naivePoints) * 100));
 
-  // Warnungen: fehlende Mechanismen ODER ein Modus, der nicht ideal passt.
-  // Warnings: missing mechanisms OR a mode that is not a good fit.
   const hasWarnings =
     !applyToOn || (!skillsOn && scenario.skill !== null) || mode === "agent" || (mode === "ask" && isWork);
 
-  // Schritt-1-Text je nach Modus. / Step-1 text depending on the mode.
   const step1 =
     mode === "custom" ? t("sim.schritt1") : mode === "agent" ? t("sim.schritt1.agentmode") : t("sim.schritt1.askmode");
 
@@ -172,8 +187,6 @@ export function Lesson_AgentSimulator() {
       <h3>{t("sim.h")}</h3>
       <p>{t("sim.p1")}</p>
 
-      {/* Die Erklaer-Box: Worum geht es hier ueberhaupt?
-          The explainer box: what is this all about? */}
       <div className="sim-intro">
         <strong>{t("sim.was.h")}</strong>
         <p>{t("sim.was.p1")}</p>
@@ -201,9 +214,7 @@ export function Lesson_AgentSimulator() {
         <em>„{t(scenario.titleKey)}"</em>
       </div>
 
-      {/* --- 2. Modus waehlen / pick the mode -----------------------------
-          Eigener Agent ODER ein eingebauter Modus aus dem Picker.
-          Custom agent OR a built-in mode from the picker. */}
+      {/* --- 2. Modus waehlen / pick the mode ----------------------------- */}
       <p>
         <strong>{t("sim.modus.h")}</strong>
       </p>
@@ -219,9 +230,7 @@ export function Lesson_AgentSimulator() {
         ))}
       </div>
 
-      {/* --- 3. Mechanismus-Schalter / mechanism toggles ------------------
-          Untereinander in einer festen Spalte -- so verspringt nichts.
-          Stacked in a fixed column -- so nothing jumps. */}
+      {/* --- 3. Mechanismus-Schalter / mechanism toggles ------------------ */}
       <div className="sim-toggles">
         <strong className="sim-toggles-title">{t("sim.tg.h")}</strong>
         <label>
@@ -235,8 +244,6 @@ export function Lesson_AgentSimulator() {
       </div>
       <p className="sim-note">{t("sim.tg.p")}</p>
 
-      {/* Sofort-Feedback DIREKT unter den Schaltern.
-          Immediate feedback RIGHT under the toggles. */}
       <div className="sim-effect">
         <span className="sim-effect-label">{t("sim.wirkung")}</span>
         <div className="sim-warnings">
@@ -253,7 +260,7 @@ export function Lesson_AgentSimulator() {
         </div>
       </div>
 
-      {/* --- Der Ablauf in vier festen Schritten / the flow in four steps -- */}
+      {/* --- Der Ablauf / the flow --------------------------------------- */}
       <div className="sim-box">
         {/* Schritt 1 / step 1 */}
         <p className="sim-step">{step1}</p>
@@ -282,8 +289,6 @@ export function Lesson_AgentSimulator() {
               ? t("sim.grund.agentmode")
               : t("sim.grund.askmode")}
         </p>
-        {/* Der @-Hinweis ergibt nur beim eigenen Agent Sinn.
-            The @ note only makes sense with a custom agent. */}
         {mode === "custom" && isWork && <p className="sim-note">{t("sim.at")}</p>}
         <p className="sim-files">
           {t("sim.beruehrte")}{" "}
@@ -320,14 +325,36 @@ export function Lesson_AgentSimulator() {
           )}
         </div>
 
-        {/* Schritt 4 / step 4 */}
+        {/* Schritt 4 / step 4 -- Was ist festgelegt, und was kostet es? ---- */}
         <p className="sim-step">{t("sim.schritt4")}</p>
+
+        {/* Kontroll-Karte: Modell, Werkzeuge, Fokus -- fest vs. ungewiss.
+            Control card: model, tools, focus -- fixed vs. undetermined. */}
+        <div className="sim-control">
+          {controlRows.map((row) => (
+            <div className="sim-ctrl-row" key={row.labelKey}>
+              <span className="sim-ctrl-dim">{t(row.labelKey)}</span>
+              <span className={isBuiltin ? "sim-ctrl-val gamble" : "sim-ctrl-val fixed"}>
+                {isBuiltin ? "○ " : "✓ "}
+                {t(isBuiltin ? row.builtinKey : row.customKey)}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Kosten: eigener Agent = ein Punkt, eingebauter Modus = Bandbreite.
+            Cost: custom agent = one point, built-in mode = a range. */}
         <div className="sim-bar-row">
           <span className="sim-bar-label">{t("sim.tok.setup")}</span>
           <div className="sim-bar">
-            <div className="sim-bar-fill setup" style={{ width: `${setupWidth}%` }} />
+            {/* Heller Teil = die ganze Bandbreite; solider Teil = Untergrenze.
+                Light part = the whole range; solid part = the lower bound. */}
+            <div className="sim-bar-fill range" style={{ width: `${maxWidth}%` }} />
+            <div className="sim-bar-fill setup" style={{ width: `${minWidth}%` }} />
           </div>
-          <span className="sim-bar-value">{setupPoints.toLocaleString()}</span>
+          <span className="sim-bar-value">
+            {isRange ? `${costMin.toLocaleString()} – ${costMax.toLocaleString()}` : costMin.toLocaleString()}
+          </span>
         </div>
         <div className="sim-bar-row">
           <span className="sim-bar-label">{t("sim.tok.naiv")}</span>
