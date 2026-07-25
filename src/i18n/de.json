@@ -141,7 +141,7 @@
   "agi.m4": "Skills (skills/*/SKILL.md) – Schritt-für-Schritt-Prozeduren auf Abruf. Sichtbar ist immer nur die Kurzbeschreibung; der Inhalt wird erst geladen, wenn die Prozedur wirklich gebraucht wird.",
   "agi.m5": "Prompt-Dateien (prompts/*.prompt.md) – gespeicherte Anfrage-Vorlagen für Wiederkehrendes, im Chat per /name abrufbar (z. B. /new-lesson). Praktisch, wenn viele im Team dieselbe Aufgabe oft stellen.",
   "agi.merksatz": "Merksatz: Instructions sagen, WIE man sich verhält. Agents bestimmen, WER arbeitet (Modell + Werkzeuge). Skills beschreiben, WIE eine Prozedur abläuft. Prompt-Dateien speichern WIEDERKEHRENDE Anfragen als Vorlage. Und alles wird so selten und so spät wie möglich geladen.",
-  "agi.transfer": "Für Fortgeschrittene: Das Muster ist werkzeugunabhängig. Ob GitHub Copilot (.github/), Claude Code (CLAUDE.md + Skills), Cursor (Rules) oder der AGENTS.md-Standard – überall gilt dasselbe Prinzip des knappen Kontext-Budgets. Wer es einmal verstanden hat, kann jedes dieser Systeme sinnvoll einrichten.",
+  "agi.transfer": "Für Fortgeschrittene: Das Muster ist werkzeugunabhängig. Ob GitHub Copilot (.github/), Cursor (Rules) oder der AGENTS.md-Standard – überall gilt dasselbe Prinzip des knappen Kontext-Budgets. Wer es einmal verstanden hat, kann jedes dieser Systeme sinnvoll einrichten.",
   "agi.sprache": "Übrigens: Die Dateien unter .github/ sind bewusst einsprachig (englisch) und knapp gehalten – sie werden dem Modell bei jedem Auftrag mitgegeben, jede Zeile kostet. Die zweisprachige Erklärung dazu steht hier in der App und im README.",
 
   "modi.h": "Und wenn ich gar keinen eigenen Agent wähle?",
@@ -414,7 +414,7 @@
 
   "lektion.shm.titel": "Skripte, Hooks & MCP",
   "lektion.shm.kurz": "Den Agenten effizienter (Tokens) und mächtiger machen.",
-  "lektion.shm.aufgabe": "Öffne scripts/check-i18n.mjs und den Skill .github/skills/i18n-check. Überlege: Welche Schritte müsste sonst das Modell selbst tun – und wie teuer (in Tokens) wäre das? (Tipp: beide JSON-Dateien haben zusammen ~700 Zeilen.)\nBonus: Skizziere einen pre-commit-Hook, der npm run check:i18n vor jedem Commit ausführt und bei Fehlern blockt.",
+  "lektion.shm.aufgabe": "Öffne scripts/check-i18n.mjs und den Skill .github/skills/i18n-check. Überlege: Welche Schritte müsste sonst das Modell selbst tun – und wie teuer (in Tokens) wäre das? (Tipp: beide JSON-Dateien haben zusammen ~700 Zeilen.)\nBonus: Öffne .github/hooks/hooks.json und scripts/pre-tool-guard.mjs – welche Dateipfade würde der preToolUse-Guard von Copilot verweigern (deny)?",
 
   "shm.h": "Fortgeschritten: Skripte, Hooks & MCP",
   "shm.p1": "Ein gutes Agent-Setup hört nicht bei Instructions, Agents und Skills auf. Drei weitere Bausteine machen es effizienter (weniger Tokens) und mächtiger (mehr Fähigkeiten).",
@@ -427,12 +427,12 @@
   "shm.skript.faustregel": "Faustregel: Ist eine Aufgabe deterministisch (immer gleiches Ergebnis)? Dann als Skript – nicht als Modell-Denkarbeit. Genau dieses Skript ruft der Skill i18n-check auf.",
 
   "shm.hook.h": "Hooks – Regeln automatisch durchsetzen",
-  "shm.hook.p1": "Ein Hook ist ein Befehl, der bei einem EREIGNIS automatisch läuft. Rund um die Werkzeuge eines Agenten sind die zwei wichtigsten Ereignisse PreToolUse (direkt VOR einem Werkzeug-Aufruf) und PostToolUse (direkt DANACH).",
+  "shm.hook.p1": "Ein Hook ist ein Befehl, den GitHub Copilot bei einem EREIGNIS automatisch ausführt. Rund um die Werkzeuge eines Agenten sind die zwei wichtigsten Ereignisse preToolUse (direkt VOR einem Werkzeug-Aufruf – kann ihn sogar VERWEIGERN) und postToolUse (direkt DANACH).",
   "shm.hook.p2": "Der Unterschied zu einer Instruction ist entscheidend: Eine Instruction SAGT dem Modell, es solle etwas tun – es kann das vergessen. Ein Hook TUT es automatisch – er kann nicht vergessen werden und kostet keine Modell-Tokens.",
-  "shm.hook.p3": "Dieses Repo hat einen echten, sofort funktionierenden Agent-Hook für Claude Code – verdrahtet in .claude/settings.json. PreToolUse ruft VOR jedem Edit/Write scripts/pre-tool-guard.mjs auf: Es BLOCKT das Bearbeiten generierter Dateien (z. B. dist/, package-lock.json) und erinnert bei einer Sprachdatei an den Zwilling. PostToolUse ruft DANACH scripts/i18n-hook.mjs auf und prüft, ob de.json und en.json synchron bleiben. Beim Arbeiten mit Claude Code in diesem Repo feuern beide sofort.",
-  "shm.hook.p4": "Dasselbe Prinzip gibt es in GitHub Copilot (Preview): .github/agents/logic.agent.md deklariert einen PostToolUse-Hook, der scripts/i18n-hook.mjs aufruft (braucht die VS-Code-Einstellung chat.useCustomAgentHooks). Anderes Werkzeug, gleiche Idee.",
-  "shm.hook.p5": "Und als klassischer git-Hook: .githooks/pre-commit führt VOR jedem Commit npm run check:i18n aus und STOPPT den Commit bei Fehlern (einmal aktivieren: git config core.hooksPath .githooks). Verwandt auf CI-Ebene: der Deploy-Workflow prüft dasselbe bei jedem Push.",
-  "shm.hook.p6": "Die Kernidee: PreToolUse kann eine Aktion abfangen, BEVOR sie passiert – ein Wächter, der sogar blocken kann. PostToolUse reagiert DANACH (prüfen, aufräumen, erinnern). Zusammen mit dem git-Hook (Sperre beim Commit) ist dieselbe Regel an drei Stellen automatisch abgesichert – ohne dass Modell oder Mensch daran denken müssen.",
+  "shm.hook.p3": "Dieses Repo hat einen echten Copilot-Hook: .github/hooks/hooks.json verdrahtet einen preToolUse-Guard (scripts/pre-tool-guard.mjs). Er läuft VOR jeder Datei-Änderung und VERWEIGERT das Bearbeiten generierter Dateien (z. B. dist/, package-lock.json). Copilot lädt diese Hooks automatisch für alle Agenten in diesem Repo (in VS Code aktuell ein Preview-Feature).",
+  "shm.hook.p4": "Hooks gibt es auf zwei Ebenen: repo-weit in .github/hooks/*.json (gilt für alle Agenten) oder agent-spezifisch direkt in einer .agent.md. Beispiel: .github/agents/logic.agent.md hat einen postToolUse-Hook, der scripts/i18n-hook.mjs aufruft – er prüft nur dann, wenn der logic-Agent arbeitet, ob de.json und en.json synchron sind.",
+  "shm.hook.p5": "Technisch: Der Hook bekommt den Werkzeug-Aufruf als JSON über die Standard-Eingabe (u. a. tool_name und tool_input.filePath) und antwortet mit einer JSON-Entscheidung. Ein preToolUse-Hook kann so \"deny\" zurückgeben und den Aufruf STOPPEN; ein postToolUse-Hook reagiert nur noch (prüfen, erinnern, protokollieren).",
+  "shm.hook.p6": "Der Gewinn: Ein Hook setzt eine Regel automatisch bei JEDEM Werkzeug-Aufruf durch – das Modell kann sie nicht vergessen, sie kostet keine Modell-Tokens, und mit preToolUse lässt sich eine riskante Aktion sogar verhindern, BEVOR sie passiert.",
 
   "shm.mcp.h": "MCP-Server – die Werkzeuge erweitern",
   "shm.mcp.p1": "MCP steht für Model Context Protocol. Ein MCP-Server ist ein kleines Programm, das dem Agenten NEUE Werkzeuge gibt – z. B. Zugriff auf eine Datenbank, ein Ticketsystem, eine Web-Suche oder das Dateisystem.",

@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Secrets / lokale Umgebungsvariablen -- NIE committen.
+# Secrets / local environment variables -- NEVER commit.
+.env
+.env.*
+!.env.example
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

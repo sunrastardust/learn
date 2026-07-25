@@ -1,0 +1,13 @@
+{
+  "//": "GitHub-Copilot-Hooks fuer dieses Repo / GitHub Copilot hooks for this repo. Siehe Lektion 18. Gelten fuer alle Copilot-Agenten im Repo (Preview-Feature in VS Code).",
+  "version": 1,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "node scripts/pre-tool-guard.mjs",
+        "timeout": 10
+      }
+    ]
+  }
+}

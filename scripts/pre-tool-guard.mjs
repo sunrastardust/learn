@@ -1,23 +1,19 @@
 // Was macht diese Datei? / What does this file do?
-// DE: Ein Agent-Hook fuer das Ereignis PreToolUse (laeuft VOR jedem Edit/Write
-//     eines Agenten). Er zeigt beide Kraefte eines Hooks:
-//       1) BLOCKEN  – generierte Dateien (dist/, out/, package-lock.json,
-//          node_modules) duerfen nicht von Hand bearbeitet werden. Exit 2
-//          stoppt den Werkzeug-Aufruf in Claude Code.
-//       2) ERINNERN – bei einer Sprachdatei ein sanfter Hinweis (Exit 0),
-//          den Zwilling nicht zu vergessen.
-//     Verdrahtet in .claude/settings.json (hooks.PreToolUse).
-// EN: An agent hook for the PreToolUse event (runs BEFORE every Edit/Write by
-//     an agent). It shows both powers of a hook:
-//       1) BLOCK   – generated files (dist/, out/, package-lock.json,
-//          node_modules) must not be hand-edited. Exit 2 stops the tool call
-//          in Claude Code.
-//       2) REMIND  – on a language file, a gentle hint (exit 0) not to forget
-//          the twin.
-//     Wired up in .claude/settings.json (hooks.PreToolUse).
-//
-// Claude Code uebergibt die Werkzeug-Daten als JSON ueber stdin.
-// Claude Code passes the tool data as JSON via stdin.
+// DE: Ein GitHub-Copilot-Hook fuer das Ereignis preToolUse (laeuft VOR jedem
+//     Werkzeug-Aufruf eines Agenten). Copilot uebergibt den Aufruf als JSON
+//     ueber die Standard-Eingabe (u. a. tool_name und tool_input.filePath),
+//     und der Hook antwortet mit einer JSON-Entscheidung auf der Standard-
+//     Ausgabe: "allow" laesst den Aufruf zu, "deny" STOPPT ihn.
+//     Hier: generierte Dateien (dist/, out/, node_modules, package-lock.json)
+//     duerfen nicht von Hand bearbeitet werden -> deny.
+//     Verdrahtet in .github/hooks/hooks.json.
+// EN: A GitHub Copilot hook for the preToolUse event (runs BEFORE every tool
+//     call by an agent). Copilot passes the call as JSON on stdin (incl.
+//     tool_name and tool_input.filePath), and the hook answers with a JSON
+//     decision on stdout: "allow" lets the call through, "deny" STOPS it.
+//     Here: generated files (dist/, out/, node_modules, package-lock.json)
+//     must not be hand-edited -> deny.
+//     Wired up in .github/hooks/hooks.json.
 
 let raw = "";
 process.stdin.on("data", (chunk) => (raw += chunk));
@@ -26,29 +22,36 @@ process.stdin.on("end", () => {
   try {
     data = JSON.parse(raw.replace(/^﻿/, "").trim());
   } catch {
-    // Kein/kaputtes JSON -> nichts tun. / No/broken JSON -> do nothing.
+    // Kein/kaputtes JSON -> im Zweifel erlauben. / No/broken JSON -> allow.
   }
 
-  // Der Pfad der Datei, die der Agent gleich aendern will.
-  // The path of the file the agent is about to change.
-  const file = String(data?.tool_input?.file_path ?? "").replace(/\\/g, "/");
+  // Der Pfad der Datei, die der Agent gleich aendern will (camelCase im
+  // tool_input). Bei Werkzeugen ohne Datei (z. B. Terminal) bleibt er leer.
+  // The path of the file the agent is about to change (camelCase in
+  // tool_input). Empty for tools without a file (e.g. terminal).
+  const input = data?.tool_input ?? {};
+  const file = String(input.filePath ?? input.file_path ?? input.path ?? "").replace(/\\/g, "/");
 
-  // 1) HARTE SPERRE: generierte Dateien nicht von Hand bearbeiten.
-  //    HARD BLOCK: don't hand-edit generated files.
-  if (/\/(dist|out|node_modules)\//.test(file) || /package-lock\.json$/.test(file)) {
-    console.error(
-      `⛔ PreToolUse-Guard: "${file}" ist generiert / is generated – nicht von Hand bearbeiten / do not hand-edit.`
+  // Antwortet Copilot mit einer Entscheidung und beendet den Hook.
+  // Answers Copilot with a decision and ends the hook.
+  const decide = (decision, reason) => {
+    const out = { hookSpecificOutput: { permissionDecision: decision } };
+    if (reason) out.hookSpecificOutput.permissionDecisionReason = reason;
+    console.log(JSON.stringify(out));
+    process.exit(0);
+  };
+
+  // Kein Datei-Pfad -> nichts zu pruefen. / No file path -> nothing to check.
+  if (!file) return decide("allow");
+
+  // Generierte Dateien nicht von Hand bearbeiten -> Aufruf verweigern.
+  // Don't hand-edit generated files -> deny the call.
+  if (/(^|\/)(dist|out|node_modules)\//.test(file) || /package-lock\.json$/.test(file)) {
+    return decide(
+      "deny",
+      `"${file}" ist generiert / is generated – nicht von Hand bearbeiten / do not hand-edit.`
     );
-    process.exit(2); // Exit 2 blockt den Werkzeug-Aufruf. / Exit 2 blocks the tool call.
   }
 
-  // 2) SANFTER HINWEIS: Sprachdatei -> an den Zwilling denken.
-  //    GENTLE HINT: language file -> remember the twin.
-  if (/src\/i18n\/(de|en)\.json$/.test(file)) {
-    console.log(
-      "ℹ PreToolUse: Du bearbeitest eine Sprachdatei – denke an den Zwilling. / You are editing a language file – remember its twin."
-    );
-  }
-
-  process.exit(0); // Alles erlaubt. / Everything allowed.
+  return decide("allow");
 });
