@@ -29,6 +29,25 @@ export default function App() {
   // State: the id of the currently selected lesson. Start: the first lesson.
   const [activeId, setActiveId] = useState(1);
 
+  // Zweiter State: Ist die Lektions-Liste auf dem Handy aufgeklappt?
+  // Auf dem Desktop spielt er keine Rolle -- dort ist die Liste per CSS
+  // immer sichtbar. Auf schmalen Bildschirmen wuerde sie sonst den halben
+  // Bildschirm fuellen, bevor man ueberhaupt zum Inhalt kommt.
+  // Second piece of state: is the lesson list expanded on mobile?
+  // On desktop it does not matter -- there the list is always visible via
+  // CSS. On narrow screens it would otherwise fill half the screen before
+  // you even get to the content.
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Beim Waehlen einer Lektion das Menue wieder zuklappen -- sonst muesste
+  // man auf dem Handy erst wieder hochscrollen.
+  // Collapse the menu when a lesson is picked -- otherwise on mobile you
+  // would have to scroll back up first.
+  function selectLesson(id: number) {
+    setActiveId(id);
+    setMenuOpen(false);
+  }
+
   // Aus der id die passende Lektion heraussuchen. .find() kann theoretisch
   // nichts finden, deshalb faengt `?? lessons[0]` diesen Fall ab.
   // Look up the matching lesson by id. .find() can in theory find nothing,
@@ -61,11 +80,30 @@ export default function App() {
         <LanguageSwitcher />
       </header>
 
+      {/* Nur auf schmalen Bildschirmen sichtbar (siehe App.css): klappt die
+          Lektions-Liste auf und zu. aria-expanded sagt Screenreadern, ob
+          gerade auf- oder zugeklappt ist.
+          Only visible on narrow screens (see App.css): expands and collapses
+          the lesson list. aria-expanded tells screen readers whether it is
+          currently open or closed. */}
+      <button
+        className="nav-toggle"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span aria-hidden="true">☰</span> {t("nav.menu")}
+        <span className="nav-toggle-count">
+          {index + 1}/{lessons.length}
+        </span>
+      </button>
+
       <div className="layout">
         {/* LINKS: die Liste aller Lektionen. onSelect setzt die neue id.
-            LEFT: the list of all lessons. onSelect sets the new id. */}
-        <aside>
-          <LessonList lessons={lessons} activeId={activeId} onSelect={setActiveId} />
+            Die Klasse "open" macht die Liste auf dem Handy sichtbar.
+            LEFT: the list of all lessons. onSelect sets the new id.
+            The class "open" makes the list visible on mobile. */}
+        <aside className={menuOpen ? "sidebar open" : "sidebar"}>
+          <LessonList lessons={lessons} activeId={activeId} onSelect={selectLesson} />
         </aside>
 
         {/* RECHTS: die aktuell gewaehlte Lektion.

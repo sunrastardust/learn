@@ -28,6 +28,11 @@ export function AgentOrgChart() {
   ];
 
   return (
+    // Der Rahmen scrollt auf schmalen Bildschirmen waagerecht. Sonst muesste
+    // die Grafik so stark schrumpfen, dass die Beschriftung unlesbar wird.
+    // The wrapper scrolls horizontally on narrow screens. Otherwise the
+    // graphic would have to shrink so much that the labels become unreadable.
+    <div className="orgchart-scroll">
     <svg className="orgchart" viewBox="0 0 680 498" role="img" xmlns="http://www.w3.org/2000/svg">
       {/* title und desc machen die Grafik fuer Screenreader verstaendlich.
           title and desc make the graphic understandable for screen readers. */}
@@ -89,5 +94,6 @@ export function AgentOrgChart() {
 
       <text className="org-s" x="40" y="478">{t("org.legende")}</text>
     </svg>
+    </div>
   );
 }

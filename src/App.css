@@ -53,6 +53,14 @@
   color: #fff;
 }
 
+/* Der Menue-Knopf gehoert NUR zur Handy-Ansicht -- auf dem Desktop ist die
+   Liste ohnehin dauerhaft sichtbar, darum hier ausgeblendet.
+   The menu button belongs to the mobile view ONLY -- on desktop the list is
+   permanently visible anyway, so it is hidden here. */
+.nav-toggle {
+  display: none;
+}
+
 /* Zwei Spalten: links die Liste (schmal), rechts der Inhalt (breit).
    Two columns: the list on the left (narrow), the content on the right (wide). */
 .layout {
@@ -936,4 +944,133 @@
 .navigation button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* =====================================================================
+   HANDY-ANSICHT / MOBILE VIEW
+   Alle Regeln fuer schmale Bildschirme gesammelt an einer Stelle. Am
+   Desktop-Layout aendert dieser Block NICHTS -- er greift erst ab 720px
+   abwaerts.
+   All rules for narrow screens gathered in one place. This block changes
+   NOTHING about the desktop layout -- it only kicks in at 720px and below.
+   ===================================================================== */
+@media (max-width: 720px) {
+  /* Weniger Rand: auf kleinen Bildschirmen zaehlt jeder Millimeter.
+     Less padding: on small screens every millimetre counts. */
+  .app {
+    padding: 12px;
+  }
+  .content {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  /* Kopfzeile kompakter; der Titel darf umbrechen.
+     More compact header; the title may wrap. */
+  .header {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-size: 26px;
+    margin-bottom: 2px;
+  }
+  .header p {
+    font-size: 15px;
+  }
+
+  /* --- Die Navigation: aufklappbares Menue ---
+     Statt 20 Knoepfe ueber dem Inhalt gibt es einen Knopf, der die Liste
+     bei Bedarf oeffnet. Nach der Auswahl schliesst sie sich wieder (siehe
+     selectLesson in App.tsx).
+     --- The navigation: a collapsible menu ---
+     Instead of 20 buttons above the content there is one button that opens
+     the list on demand. It closes again after picking (see selectLesson in
+     App.tsx). */
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    font: inherit;
+    text-align: left;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--accent-border);
+    border-radius: 10px;
+    background: var(--accent-bg);
+    color: var(--text-h);
+    cursor: pointer;
+  }
+  .nav-toggle-count {
+    margin-left: auto;
+    font-size: 14px;
+    color: var(--text);
+  }
+  /* Zugeklappt ist der Standard; erst die Klasse "open" zeigt die Liste.
+     Collapsed is the default; only the class "open" reveals the list. */
+  .sidebar {
+    display: none;
+  }
+  .sidebar.open {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  /* Beispiel- und Aufgaben-Boxen: schmalerer Innenabstand.
+     Example and task boxes: narrower inner padding. */
+  .example {
+    padding: 12px 14px;
+  }
+  .task {
+    padding: 10px 12px;
+  }
+
+  /* Zurueck/Weiter: beide Knoepfe gleich breit und gut treffbar.
+     Back/Next: both buttons equally wide and easy to hit. */
+  .navigation button {
+    flex: 1;
+    padding: 12px 10px;
+  }
+
+  /* Das Organigramm nicht schrumpfen lassen -- sonst wird die Beschriftung
+     unlesbar. Stattdessen waagerecht scrollen.
+     Don't shrink the org chart -- the labels would become unreadable.
+     Scroll horizontally instead. */
+  .orgchart-scroll {
+    overflow-x: auto;
+  }
+  .orgchart {
+    min-width: 600px;
+  }
+
+  /* Kosten-Balken: Beschriftung ueber den Balken statt daneben.
+     Cost bars: label above the bar instead of beside it. */
+  .sim-bar-row {
+    grid-template-columns: 1fr auto;
+    gap: 6px 10px;
+  }
+  .sim-bar-label {
+    grid-column: 1 / -1;
+  }
+
+  /* Der Live-Editor: etwas kleinere Schrift, damit mehr Code sichtbar ist.
+     The live editor: slightly smaller type so more code fits. */
+  .playground-editor {
+    font-size: 13px;
+  }
+  .playground-preview input {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Lange Datei-Pfade und Code-Schnipsel duerfen umbrechen statt die Seite
+     breit zu machen.
+     Long file paths and code snippets may wrap instead of widening the page. */
+  .lesson-text code,
+  .sim-file {
+    overflow-wrap: anywhere;
+  }
 }
