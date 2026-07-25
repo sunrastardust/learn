@@ -13,6 +13,7 @@
 // simulator (lesson 18) shows it in practice.
 
 import { useLanguage } from "../i18n/LanguageContext";
+import { AgentOrgChart } from "../components/AgentOrgChart";
 
 // Die eingebauten Modi + der eigene Agent als Tabellen-Daten. Namen fest,
 // die Beschreibungen kommen uebersetzt aus den JSON-Dateien.
@@ -37,6 +38,14 @@ export function Lesson_AgentsIntro() {
       <p>{t("agi.beispiel")}</p>
       <p>{t("agi.p2")}</p>
       <p>{t("agi.p3")}</p>
+
+      {/* Das Organigramm macht das "Team" sofort sichtbar -- die Mechanismen
+          darunter erklaeren dann die einzelnen Bausteine.
+          The org chart makes the "team" visible at once -- the mechanisms
+          below then explain the individual building blocks. */}
+      <h4>{t("org.h")}</h4>
+      <p>{t("org.p")}</p>
+      <AgentOrgChart />
 
       <p>{t("agi.p4")}</p>
       {/* Die fuenf Mechanismen als Liste -- wieder .map() ueber Daten.

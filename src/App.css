@@ -726,6 +726,45 @@
   margin-top: 6px;
 }
 
+/* --- Organigramm (Lektion 16) / org chart (lesson 16) ---
+   Die Grafik skaliert mit der Breite; die Farben kommen aus den CSS-
+   Variablen, damit sie in hellem UND dunklem Modus stimmen.
+   The graphic scales with the width; the colours come from the CSS
+   variables so they work in light AND dark mode. */
+.orgchart {
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+/* Neutrale Kaesten: Kontext, der automatisch dazukommt.
+   Neutral boxes: context that is added automatically. */
+.orgchart .org-box-n {
+  fill: var(--code-bg);
+  stroke: var(--border);
+}
+/* Hervorgehobene Kaesten: die Agenten selbst.
+   Highlighted boxes: the agents themselves. */
+.orgchart .org-box-a {
+  fill: var(--accent-bg);
+  stroke: var(--accent-border);
+}
+.orgchart .org-t {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  fill: var(--text-h);
+}
+.orgchart .org-s {
+  font-family: var(--sans);
+  font-size: 12px;
+  fill: var(--text);
+}
+.orgchart .org-arr {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  fill: none;
+}
+
 /* Code-Block fuer echte Datei-Ausschnitte (z. B. Frontmatter, Lektion 19).
    Scrollt waagerecht, statt die Seite zu sprengen.
    Code block for real file excerpts (e.g. frontmatter, lesson 19).
