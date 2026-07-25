@@ -1,5 +1,5 @@
 {
-  "//": "GitHub-Copilot-Hooks fuer dieses Repo / GitHub Copilot hooks for this repo. Siehe Lektion 19. Gelten fuer alle Copilot-Agenten im Repo (Preview-Feature in VS Code).",
+  "//": "GitHub-Copilot-Hooks fuer dieses Repo / GitHub Copilot hooks for this repo. Siehe Lektion 20. Gelten fuer alle Copilot-Agenten im Repo (Preview-Feature in VS Code).",
   "version": 1,
   "hooks": {
     "PreToolUse": [

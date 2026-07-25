@@ -33,6 +33,7 @@ import { Lesson_Roadmap } from "./Lesson_Roadmap";
 import { Lesson_AgentsIntro } from "./Lesson_AgentsIntro";
 import { Lesson_Mechanisms } from "./Lesson_Mechanisms";
 import { Lesson_AgentSimulator } from "./Lesson_AgentSimulator";
+import { Lesson_Frontmatter } from "./Lesson_Frontmatter";
 import { Lesson_ScriptsHooksMCP } from "./Lesson_ScriptsHooksMCP";
 
 // `: Lesson[]` sagt TypeScript: ein Array aus Lesson-Objekten. Fehlt ein
@@ -187,6 +188,14 @@ export const lessons: Lesson[] = [
   },
   {
     id: 19,
+    titleKey: "lektion.fm.titel",
+    summaryKey: "lektion.fm.kurz",
+    taskKey: "lektion.fm.aufgabe",
+    groupKey: "gruppe.agenten",
+    Content: Lesson_Frontmatter,
+  },
+  {
+    id: 20,
     titleKey: "lektion.shm.titel",
     summaryKey: "lektion.shm.kurz",
     taskKey: "lektion.shm.aufgabe",

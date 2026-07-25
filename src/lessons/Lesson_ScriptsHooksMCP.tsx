@@ -17,7 +17,7 @@ import { useLanguage } from "../i18n/LanguageContext";
 // The three building blocks as table data for the summary at the end.
 const blocks = [
   { name: "shm.tab.skript", purpose: "shm.tab.skript.zweck", example: "scripts/check-i18n.mjs" },
-  { name: "shm.tab.hook", purpose: "shm.tab.hook.zweck", example: ".github/workflows/deploy.yml" },
+  { name: "shm.tab.hook", purpose: "shm.tab.hook.zweck", example: ".github/hooks/hooks.json" },
   { name: "shm.tab.mcp", purpose: "shm.tab.mcp.zweck", example: "shm.tab.mcp.beispiel" },
 ];
 

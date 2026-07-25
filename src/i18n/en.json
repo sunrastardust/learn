@@ -141,6 +141,7 @@
   "agi.m4": "Skills (skills/*/SKILL.md) – step-by-step procedures on demand. Only the short description is always visible; the content is loaded only when the procedure is actually needed.",
   "agi.m5": "Prompt files (prompts/*.prompt.md) – saved request templates for recurring asks, invoked in chat via /name (e.g. /new-lesson). Handy when many people on a team ask for the same thing often.",
   "agi.merksatz": "Mnemonic: instructions say HOW to behave. Agents decide WHO works (model + tools). Skills describe HOW a procedure runs. Prompt files store RECURRING requests as templates. And everything is loaded as rarely and as late as possible.",
+  "agi.hooks": "There is also a sixth building block later on: hooks. They don't control WHAT gets loaded – they run commands automatically on certain events, e.g. before every file change. More on that in the last lesson of this stage.",
   "agi.transfer": "For advanced readers: the pattern is tool-independent. Whether GitHub Copilot (.github/), Cursor (rules) or the AGENTS.md standard – the same scarce-context-budget principle applies everywhere. Once you understand it, you can set up any of these systems sensibly.",
   "agi.sprache": "By the way: the files under .github/ are deliberately single-language (English) and terse – they are handed to the model on every request, every line costs. The bilingual explanation lives here in the app and in the README.",
 
@@ -182,6 +183,7 @@
   "sim.f3": ".github/agents/*.agent.md – router 'project' + specialists 'ui', 'logic', 'docs' (each with model + tools)",
   "sim.f4": ".github/skills/*/SKILL.md – procedures on demand ('new-lesson', 'i18n-check')",
   "sim.f5": ".github/prompts/*.prompt.md – saved request templates, invoked in chat via /name ('/new-lesson', '/explain')",
+  "sim.f6": ".github/hooks/hooks.json – hooks that run automatically around tool calls (see the last lesson)",
   "sim.waehle": "Pick a task:",
   "sim.s1.titel": "Change the colour of the active lesson",
   "sim.s1.grund": "CSS/design → @ui. Changes to the appearance need a strong coding model and edit tools.",
@@ -391,8 +393,8 @@
   "lektion.mechanismen.kurz": "Instructions, skills or agent – when do you use which?",
   "lektion.mechanismen.aufgabe": "Match them up – where do these three new rules belong?\n(a) \"CSS colours always via the variables from index.css\"\n(b) \"How to add a third language: 5 steps\"\n(c) \"The test agent uses a cheap model and may only read\"\nCheck your answers by looking into .github/ to see which folder fits. (Solution: a → instructions/, b → skills/, c → agents/ – (a) even exists there already.)",
 
-  "mech.h": "Why three mechanisms – and not everything in one place?",
-  "mech.p1": "At first glance it looks like duplication: there is an i18n instruction AND an i18n skill. The difference is not the topic but the TRIGGER – the three mechanisms are activated by completely different things and stay loaded for different lengths of time.",
+  "mech.h": "Instruction, skill or agent – why not everything in one place?",
+  "mech.p1": "Of the five mechanisms from the last lesson we look at the three most important ones here: instructions, skills and agents. At first glance it looks like duplication – there is an i18n instruction AND an i18n skill. The difference is not the topic but the TRIGGER: the three are activated by completely different things and stay loaded for different lengths of time.",
 
   "mech.karten.h": "The three triggers",
   "mech.k1.ausloeser": "Path",
@@ -436,14 +438,70 @@
 
   "lektion.shm.titel": "Scripts, hooks & MCP",
   "lektion.shm.kurz": "Making the agent more efficient (tokens) and more capable.",
-  "lektion.shm.aufgabe": "Open scripts/check-i18n.mjs and the skill .github/skills/i18n-check. Think about it: which steps would the model otherwise have to do itself – and how expensive (in tokens) would that be? (Hint: both JSON files together are ~700 lines.)\nBonus: open .github/hooks/hooks.json and scripts/pre-tool-guard.mjs – which file paths would Copilot's preToolUse guard deny?",
+  "lektion.shm.aufgabe": "Open scripts/check-i18n.mjs and the skill .github/skills/i18n-check. Think about it: which steps would the model otherwise have to do itself – and how expensive (in tokens) would that be? (Hint: both JSON files together are over 800 lines.)\nBonus: open .github/hooks/hooks.json and scripts/pre-tool-guard.mjs – which file paths would Copilot's preToolUse guard deny?",
+
+  "lektion.fm.titel": "Frontmatter: the header of every file",
+  "lektion.fm.kurz": "What may go between the --- lines at the top – and what it does.",
+  "lektion.fm.aufgabe": "Open .github/agents/docs.agent.md and .github/instructions/i18n.instructions.md. Compare the two headers: which fields are in them, and why does one file need an applyTo and the other doesn't?\nBonus: add an argument-hint to the docs agent and check in Copilot Chat whether the hint text appears.",
+
+  "fm.h": "Frontmatter – the file's settings block",
+  "fm.p1": "Almost every file in the .github folder starts with a block between two lines of three dashes (---). This block is called frontmatter and is written in YAML: one field per line, following the pattern field: value.",
+  "fm.p2": "The key insight: frontmatter does NOT address the language model but the tool (VS Code / Copilot). It says: what is this file's role called, which model should run, which tools are allowed, when does it apply? Only the text BELOW the frontmatter is what the model actually gets to read.",
+  "fm.p3": "Mnemonic: frontmatter = settings for the tool. The text below = instructions for the model.",
+
+  "fm.bsp.h": "A real example from this repo",
+  "fm.bsp.p": "This is what the logic agent's header looks like. Settings on top, below (after the second ---) the actual brief in plain text:",
+
+  "fm.sp.feld": "Field",
+  "fm.sp.zweck": "What it does",
+
+  "fm.agent.h": "Fields in .agent.md (agents)",
+  "fm.agent.p": "The richest header – this is where the complete role is defined:",
+  "fm.a.name": "The agent's name, used to select it in chat (e.g. @logic). If missing, the file name applies.",
+  "fm.a.desc": "Short description. Important: this is how a router agent recognises what this specialist is responsible for – so word it precisely.",
+  "fm.a.model": "Pins the model (e.g. Claude Haiku 4.5). Without this field the model from the model picker applies.",
+  "fm.a.tools": "The allowed tools, e.g. ['search', 'edit']. Less is more: what is not listed, the agent cannot do.",
+  "fm.a.agents": "Which sub-agents this agent may call. The router has ['ui', 'logic', 'docs'] here, the specialists an empty [] – they are not meant to delegate further.",
+  "fm.a.hint": "Hint text in the chat input field – shows the user what input the agent expects.",
+  "fm.a.hooks": "Hooks that run ONLY for this agent (e.g. PostToolUse after every file change). More on that in the next lesson.",
+  "fm.a.userinv": "Controls whether the agent appears in the selection menu. Related: disable-model-invocation prevents it from being called as a sub-agent.",
+  "fm.agent.mehr": "There are further fields for special cases – e.g. target (which environment the agent is meant for), mcp-servers and handoffs (suggestions for which agent takes over next). For everyday work the fields in the table are enough.",
+
+  "fm.instr.h": "Fields in .instructions.md (rules)",
+  "fm.instr.p": "Only a few fields here – all of them optional:",
+  "fm.i.applyto": "The most important field: a glob pattern saying which files the rules apply to – e.g. \"src/i18n/**\" or \"**/*.ts,**/*.tsx\". Only when a matching file is touched do the rules enter the context. With \"**\" they would apply everywhere.",
+  "fm.i.desc": "Short description shown on hover in the Chat view.",
+  "fm.i.name": "Display name in the UI. Without it, the file name applies.",
+
+  "fm.skill.h": "Fields in SKILL.md (procedures)",
+  "fm.skill.p": "Only two fields are required – but the description in particular is decisive, because it is the only part visible to the model all the time:",
+  "fm.s.name": "REQUIRED. Lowercase letters, digits and hyphens only – and it MUST match the folder name exactly, otherwise the skill is not loaded.",
+  "fm.s.desc": "REQUIRED. It has to say both: WHAT the skill does and WHEN to use it. Because the model decides purely from this sentence whether to load the procedure at all.",
+  "fm.s.tools": "Restricts which tools are allowed while the skill runs – e.g. read only, never execute commands.",
+  "fm.s.license": "Optional licence information if you share skills with others.",
+
+  "fm.prompt.h": "Fields in .prompt.md (request templates)",
+  "fm.prompt.p": "A template for recurring requests, invoked in chat with /name:",
+  "fm.p.desc": "Short description of the template – appears in the list after typing /.",
+  "fm.p.agent": "Who runs the template: a built-in mode (ask, agent, plan) OR the name of a custom agent. In this repo /new-lesson sends the request straight to the logic agent.",
+  "fm.p.hint": "Hint text in the input field – e.g. what input the template expects.",
+  "fm.p.model": "Optionally a fixed model for this template.",
+  "fm.p.tools": "Optionally a restriction of the tools for this template.",
+
+  "fm.alt.h": "Careful with old examples from the web",
+  "fm.alt.p1": "The format has evolved. If you copy an example from somewhere, check these three points – otherwise the file will not work as expected:",
+  "fm.alt.i1": "In prompt files the field used to be called mode. Today it is agent.",
+  "fm.alt.i2": "Agent files used to be called .chatmode.md and lived in .github/chatmodes/. Today: .agent.md in .github/agents/.",
+  "fm.alt.i3": "The field infer has been replaced – use user-invocable and disable-model-invocation instead.",
+
+  "fm.ausnahme": "One exception at the end: copilot-instructions.md needs NO frontmatter at all. It always applies to everything anyway – so there is nothing to configure. And the hook file .github/hooks/hooks.json is plain JSON, entirely without frontmatter.",
 
   "shm.h": "Advanced: scripts, hooks & MCP",
   "shm.p1": "A good agent setup does not stop at instructions, agents and skills. Three more building blocks make it more efficient (fewer tokens) and more capable (more abilities).",
 
   "shm.skript.h": "Helper scripts – doing deterministic work cheaply",
   "shm.skript.p1": "A script always does the same thing: same input → same result. The agent CALLS it instead of reasoning itself. That is exactly what saves tokens.",
-  "shm.skript.p2": "Example from this project: npm run check:i18n (scripts/check-i18n.mjs). Without the script, the model would have to read both language files – ~700 lines together – in full and compare all keys in its head. That costs many thousands of tokens and is error-prone. With the script: one command, one result line.",
+  "shm.skript.p2": "Example from this project: npm run check:i18n (scripts/check-i18n.mjs). Without the script, the model would have to read both language files – over 800 lines together – in full and compare all keys in its head. That costs many thousands of tokens and is error-prone. With the script: one command, one result line.",
   "shm.skript.vorher": "Model compares all keys by hand",
   "shm.skript.nachher": "Run the script + read 1 line",
   "shm.skript.faustregel": "Rule of thumb: is a task deterministic (always the same result)? Then make it a script – not model reasoning. This exact script is what the i18n-check skill calls.",

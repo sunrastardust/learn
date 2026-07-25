@@ -726,7 +726,25 @@
   margin-top: 6px;
 }
 
-/* --- Token-Vergleich (Lektion 19) / token comparison (lesson 19) ---
+/* Code-Block fuer echte Datei-Ausschnitte (z. B. Frontmatter, Lektion 19).
+   Scrollt waagerecht, statt die Seite zu sprengen.
+   Code block for real file excerpts (e.g. frontmatter, lesson 19).
+   Scrolls horizontally instead of breaking the page. */
+.code-block {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  background: var(--code-bg);
+  color: var(--text-h);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* --- Token-Vergleich (Lektion 20) / token comparison (lesson 20) ---
    Zwei Balken: Modell-Denkarbeit (gross) vs. Skript (winzig). Breiten
    illustrativ. / Two bars: model reasoning (big) vs. script (tiny). Widths
    illustrative. */

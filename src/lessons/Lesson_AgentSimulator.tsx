@@ -374,7 +374,7 @@ export function Lesson_AgentSimulator() {
           For reference at the very end: the real files of the setup. */}
       <h4>{t("sim.dateien.h")}</h4>
       <ul>
-        {["sim.f1", "sim.f2", "sim.f3", "sim.f4", "sim.f5"].map((key) => (
+        {["sim.f1", "sim.f2", "sim.f3", "sim.f4", "sim.f5", "sim.f6"].map((key) => (
           <li key={key}>{t(key)}</li>
         ))}
       </ul>

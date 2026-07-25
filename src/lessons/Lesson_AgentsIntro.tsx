@@ -47,6 +47,12 @@ export function Lesson_AgentsIntro() {
         ))}
       </ul>
 
+      {/* Vorwaerts-Verweis: Hooks sind ein weiterer Baustein, aber eine
+          andere Kategorie (Automatisierung statt Kontext) -- Lektion 19.
+          Forward reference: hooks are another building block, but a different
+          category (automation instead of context) -- lesson 19. */}
+      <p>{t("agi.hooks")}</p>
+
       <p>
         <strong>{t("agi.merksatz")}</strong>
       </p>
