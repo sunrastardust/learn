@@ -47,9 +47,9 @@ const triggers = [
 ];
 
 // --- Grafik 2: drei Faelle -- welche Aufgabe laedt welchen Kontext? -------
-// Die Chip-Farben sind dieselben wie im Simulator (Lektion 17).
+// Die Chip-Farben sind dieselben wie im Simulator (Lektion 18).
 // --- Graphic 2: three cases -- which task loads which context? ------------
-// The chip colours are the same as in the simulator (lesson 17).
+// The chip colours are the same as in the simulator (lesson 18).
 const cases = [
   {
     titleKey: "mech.f1.titel",

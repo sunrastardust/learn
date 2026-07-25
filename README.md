@@ -110,7 +110,7 @@ veraendert die echten Projekt-Dateien nie.
 
 ```
 react-lernpfad/
-├─ .github/                # GitHub-Copilot-Agent-Setup (siehe Lektionen 15-18)
+├─ .github/                # GitHub-Copilot-Agent-Setup (siehe Lektionen 16-19)
 │  ├─ copilot-instructions.md   # Grundregeln, IMMER geladen -> kurz halten
 │  ├─ instructions/        # Bereichs-Regeln, nur bei applyTo-Treffern geladen
 │  ├─ agents/              # project (Router, guenstig) + ui / logic / docs
@@ -159,14 +159,15 @@ sind zweisprachig. TypeScript-Besonderheiten werden an Ort und Stelle erklaert.
 11. **Gemeinsamer State** – State nach oben ziehen (Lifting State Up).
 12. **useEffect** – Timer, Daten laden, Aufraeumen.
 13. **Mehrsprachigkeit mit JSON** – wie die DE/EN-Umschaltung funktioniert (Context).
-14. **Lernfahrplan** – was du fuer den Einstieg in ein echtes Projekt brauchst.
+14. **Konfigurationsdateien & .env** – welche Dateien das Projekt steuern, und wie man Geheimnisse behandelt.
+15. **Lernfahrplan** – was du fuer den Einstieg in ein echtes Projekt brauchst.
 
 **Stufe 2: KI-Agenten & Copilot**
 
-15. **KI-Agenten: Einfuehrung** – wie ein Agent-System grundsaetzlich funktioniert.
-16. **Mechanismen im Vergleich** – Instructions, Skills oder Agent: wann nimmt man was?
-17. **Agent-Setup: Simulator** – das Copilot-Setup dieses Repos interaktiv testen.
-18. **Skripte, Hooks & MCP** – den Agenten effizienter (Tokens) und maechtiger machen.
+16. **KI-Agenten: Einfuehrung** – wie ein Agent-System grundsaetzlich funktioniert.
+17. **Mechanismen im Vergleich** – Instructions, Skills oder Agent: wann nimmt man was?
+18. **Agent-Setup: Simulator** – das Copilot-Setup dieses Repos interaktiv testen.
+19. **Skripte, Hooks & MCP** – den Agenten effizienter (Tokens) und maechtiger machen.
 
 ## Mehrsprachigkeit (DE/EN)
 
@@ -233,7 +234,7 @@ dem Prinzip **"so wenig Kontext wie moeglich, so viel wie noetig"**:
 | Agents | `agents/*.agent.md` | `project` = guenstiger Router (Haiku), delegiert an `ui`/`logic` (Sonnet) oder `docs` (Haiku) |
 | Skills | `skills/*/SKILL.md` | Prozedur-Wissen auf Abruf (`new-lesson`, `i18n-check`) |
 | Prompts | `prompts/*.prompt.md` | gespeicherte Anfrage-Vorlagen, im Chat per `/name` (`/new-lesson`, `/explain`) |
-| Hooks | `.github/hooks/hooks.json` (Copilot preToolUse-Guard) · `agents/logic.agent.md` (Copilot postToolUse) · `.githooks/pre-commit` (git-Hook) | laufen automatisch rund um Werkzeuge bzw. Commits (siehe Lektion 18) |
+| Hooks | `.github/hooks/hooks.json` (Copilot preToolUse-Guard) · `agents/logic.agent.md` (Copilot postToolUse) · `.githooks/pre-commit` (git-Hook) | laufen automatisch rund um Werkzeuge bzw. Commits (siehe Lektion 19) |
 
 Die Copilot-Hooks (`.github/hooks/`, `agents/*.agent.md`) sind in VS Code
 aktuell ein Preview-Feature. Den git-Hook einmalig aktivieren:
@@ -245,13 +246,13 @@ eine Aufgabe stellen – der Router delegiert an den passenden Spezialisten.
 Spezialisten lassen sich auch jederzeit direkt waehlen; ohne gewaehlten Agent
 gilt das Modell aus dem Model-Picker.
 Erklaerung, Mechanismen-Vergleich und interaktiver Simulator:
-**Lektionen 15–18** in der App.
+**Lektionen 16–19** in der App.
 Hinweis: Die `.github`-Dateien sind bewusst einsprachig (englisch) und knapp –
 sie kosten bei jedem Auftrag Tokens; die zweisprachige Doku steht hier.
 
 ## Naechste Schritte (Stufe 3)
 
-Siehe Lektion 14 (**Lernfahrplan**) in der App – dort steht, was ihr schon
+Siehe Lektion 15 (**Lernfahrplan**) in der App – dort steht, was ihr schon
 koennt, was als Naechstes kommt (useEffect, eigene Hooks, Router, Datenladen,
 Formulare, State-Management) und was im Projektalltag wichtig ist (Tooling,
 React DevTools, fremden Code lesen, Git, Tests). Beste Vertiefung:
@@ -357,7 +358,7 @@ the start at any time. This sandbox never touches the real project files.
 
 ```
 react-lernpfad/
-├─ .github/                # GitHub Copilot agent setup (see lessons 15-18)
+├─ .github/                # GitHub Copilot agent setup (see lessons 16-19)
 │  ├─ copilot-instructions.md   # base rules, ALWAYS loaded -> keep short
 │  ├─ instructions/        # area rules, loaded only on applyTo matches
 │  ├─ agents/              # project (router, cheap) + ui / logic / docs
@@ -406,14 +407,15 @@ bilingual, too. TypeScript specifics are explained right where they appear.
 11. **Shared state** – lifting state up to the shared parent.
 12. **useEffect** – timers, loading data, cleanup.
 13. **Multi-language with JSON** – how the DE/EN switch works (context).
-14. **Roadmap** – what you need to join a real project.
+14. **Config files & .env** – which files control the project, and how to handle secrets.
+15. **Roadmap** – what you need to join a real project.
 
 **Stage 2: AI agents & Copilot**
 
-15. **AI agents: introduction** – how an agent system fundamentally works.
-16. **Mechanisms compared** – instructions, skills or agent: when do you use which?
-17. **Agent setup: simulator** – test this repo's Copilot setup interactively.
-18. **Scripts, hooks & MCP** – make the agent more efficient (tokens) and more capable.
+16. **AI agents: introduction** – how an agent system fundamentally works.
+17. **Mechanisms compared** – instructions, skills or agent: when do you use which?
+18. **Agent setup: simulator** – test this repo's Copilot setup interactively.
+19. **Scripts, hooks & MCP** – make the agent more efficient (tokens) and more capable.
 
 ## Multi-language (DE/EN)
 
@@ -479,7 +481,7 @@ principle **"as little context as possible, as much as needed"**:
 | Agents | `agents/*.agent.md` | `project` = cheap router (Haiku), delegates to `ui`/`logic` (Sonnet) or `docs` (Haiku) |
 | Skills | `skills/*/SKILL.md` | procedural knowledge on demand (`new-lesson`, `i18n-check`) |
 | Prompts | `prompts/*.prompt.md` | saved request templates, invoked in chat via `/name` (`/new-lesson`, `/explain`) |
-| Hooks | `.github/hooks/hooks.json` (Copilot preToolUse guard) · `agents/logic.agent.md` (Copilot postToolUse) · `.githooks/pre-commit` (git hook) | run automatically around tools resp. commits (see lesson 18) |
+| Hooks | `.github/hooks/hooks.json` (Copilot preToolUse guard) · `agents/logic.agent.md` (Copilot postToolUse) · `.githooks/pre-commit` (git hook) | run automatically around tools resp. commits (see lesson 19) |
 
 The Copilot hooks (`.github/hooks/`, `agents/*.agent.md`) are currently a
 preview feature in VS Code. Activate the git hook once:
@@ -490,13 +492,13 @@ Usage: open Copilot Chat in VS Code, pick the **project** agent and give it a
 task – the router delegates to the right specialist. You can also pick a
 specialist directly at any time; with no agent selected, the model from the
 model picker applies. Explanation and an
-interactive simulator: **lessons 15–18** in the app. Note: the `.github`
+interactive simulator: **lessons 16–19** in the app. Note: the `.github`
 files are deliberately single-language (English) and terse – they cost tokens
 on every request; the bilingual docs live here.
 
 ## Next steps (stage 3)
 
-See lesson 14 (**Roadmap**) in the app – it lists what you already learn here,
+See lesson 15 (**Roadmap**) in the app – it lists what you already learn here,
 what comes next (useEffect, custom hooks, router, data fetching, forms, state
 management) and what matters in day-to-day project work (tooling, React
 DevTools, reading unfamiliar code, Git, tests). Best place to go deeper:

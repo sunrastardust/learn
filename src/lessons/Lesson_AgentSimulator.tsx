@@ -148,7 +148,7 @@ export function Lesson_AgentSimulator() {
   // Ask mode only converses, hence the smaller base.
   const base = mode === "ask" ? BASE_QUESTION : isWork ? BASE_WORK : BASE_QUESTION;
   // applyTo & Skills gelten in JEDEM Modus (agentenunabhaengig, siehe Lekt. 16).
-  // applyTo & skills apply in EVERY mode (agent-independent, see lesson 16).
+  // applyTo & skills apply in EVERY mode (agent-independent, see lesson 17).
   const instructionCost = applyToOn ? scenario.instructions.length * PER_APPLYTO : ALL_APPLYTO;
   const skillCost = skillsOn ? (scenario.skill ? PER_SKILL : 0) + SKILL_INDEX : 0;
   const ctxSum = base + ALWAYS_RULES + instructionCost + skillCost;

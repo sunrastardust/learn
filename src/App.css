@@ -304,7 +304,7 @@
   color: var(--text-h);
 }
 
-/* --- Mechanismen-Vergleich (Lektion 16) / mechanisms compared (lesson 16) ---
+/* --- Mechanismen-Vergleich (Lektion 17) / mechanisms compared (lesson 17) ---
    Drei Grafiken: Ausloeser-Karten, Fall-Liste, Entscheidungsbaum.
    Three graphics: trigger cards, case list, decision tree. */
 
@@ -418,7 +418,7 @@
   justify-self: end;
 }
 
-/* --- Agent-Simulator (Lektion 17) / agent simulator (lesson 17) --- */
+/* --- Agent-Simulator (Lektion 18) / agent simulator (lesson 18) --- */
 /* Die Erklaer-Box: worum es geht. / The explainer box: what this is about. */
 .sim-intro {
   border: 1px solid var(--accent-border);
@@ -726,7 +726,7 @@
   margin-top: 6px;
 }
 
-/* --- Token-Vergleich (Lektion 18) / token comparison (lesson 18) ---
+/* --- Token-Vergleich (Lektion 19) / token comparison (lesson 19) ---
    Zwei Balken: Modell-Denkarbeit (gross) vs. Skript (winzig). Breiten
    illustrativ. / Two bars: model reasoning (big) vs. script (tiny). Widths
    illustrative. */

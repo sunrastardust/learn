@@ -10,7 +10,7 @@
 // context (tokens) is scarce and which five mechanisms a good setup uses.
 // Also: what happens if you pick NO custom agent at all -- the built-in modes
 // (ask / agent / plan) compared to a custom agent, including cost. The
-// simulator (lesson 17) shows it in practice.
+// simulator (lesson 18) shows it in practice.
 
 import { useLanguage } from "../i18n/LanguageContext";
 

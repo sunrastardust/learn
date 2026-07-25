@@ -28,6 +28,7 @@ import { Lesson_ListsKeys } from "./Lesson_ListsKeys";
 import { Lesson_SharedState } from "./Lesson_SharedState";
 import { Lesson_UseEffect } from "./Lesson_UseEffect";
 import { Lesson_MultiLanguage } from "./Lesson_MultiLanguage";
+import { Lesson_ConfigFiles } from "./Lesson_ConfigFiles";
 import { Lesson_Roadmap } from "./Lesson_Roadmap";
 import { Lesson_AgentsIntro } from "./Lesson_AgentsIntro";
 import { Lesson_Mechanisms } from "./Lesson_Mechanisms";
@@ -146,6 +147,14 @@ export const lessons: Lesson[] = [
   },
   {
     id: 14,
+    titleKey: "lektion.config.titel",
+    summaryKey: "lektion.config.kurz",
+    taskKey: "lektion.config.aufgabe",
+    groupKey: "gruppe.react",
+    Content: Lesson_ConfigFiles,
+  },
+  {
+    id: 15,
     titleKey: "lektion.roadmap.titel",
     summaryKey: "lektion.roadmap.kurz",
     taskKey: "lektion.roadmap.aufgabe",
@@ -153,7 +162,7 @@ export const lessons: Lesson[] = [
     Content: Lesson_Roadmap,
   },
   {
-    id: 15,
+    id: 16,
     titleKey: "lektion.agintro.titel",
     summaryKey: "lektion.agintro.kurz",
     taskKey: "lektion.agintro.aufgabe",
@@ -161,7 +170,7 @@ export const lessons: Lesson[] = [
     Content: Lesson_AgentsIntro,
   },
   {
-    id: 16,
+    id: 17,
     titleKey: "lektion.mechanismen.titel",
     summaryKey: "lektion.mechanismen.kurz",
     taskKey: "lektion.mechanismen.aufgabe",
@@ -169,7 +178,7 @@ export const lessons: Lesson[] = [
     Content: Lesson_Mechanisms,
   },
   {
-    id: 17,
+    id: 18,
     titleKey: "lektion.agsim.titel",
     summaryKey: "lektion.agsim.kurz",
     taskKey: "lektion.agsim.aufgabe",
@@ -177,7 +186,7 @@ export const lessons: Lesson[] = [
     Content: Lesson_AgentSimulator,
   },
   {
-    id: 18,
+    id: 19,
     titleKey: "lektion.shm.titel",
     summaryKey: "lektion.shm.kurz",
     taskKey: "lektion.shm.aufgabe",
