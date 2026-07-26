@@ -298,6 +298,12 @@
   "tools.lib.oxlint": "Der Linter: findet problematische Muster im Code (npm run lint).",
   "tools.lib.reactlive": "Der Live-Editor in den Basics-Lektionen: führt geänderten Beispiel-Code sofort im Browser aus (mit prism-react-renderer fürs Syntax-Highlighting).",
   "tools.lib.node": "Die Laufzeit und der Paketmanager: npm run dev, npm install & Co. laufen darüber.",
+  "tools.build.h": "Was passiert bei npm run build?",
+  "tools.build.p1": "Dein Code in src/ besteht aus über 20 Dateien: TypeScript, JSX, mehrere CSS-Dateien. Kein Browser versteht das direkt – und 20 einzelne Netzwerk-Anfragen wären langsam. Deshalb übersetzt und bündelt Vite beim Build alles zu wenigen fertigen Dateien im Ordner dist/.",
+  "tools.build.p2": "Konkret entstehen genau zwei Dateien unter dist/assets/:",
+  "tools.build.p3": "Der Zufalls-Code im Namen (z. B. -edQvr5ws) ändert sich bei jedem Build, sobald sich der Inhalt ändert. Das nennt man Cache-Busting: Browser speichern Dateien anhand ihres Namens zwischen – ändert sich nur der Inhalt, nicht aber der Name, würden Nutzer eine veraltete Version aus dem Cache bekommen.",
+  "tools.build.p4": "Deshalb steht dist/ in .gitignore: Es ist kein Quellcode, sondern ein reproduzierbares Ergebnis – jeder kann es aus src/ neu erzeugen. Genau deshalb verweigert auch der preToolUse-Guard (Lektion 20) das Bearbeiten von Dateien in dist/: Handarbeit dort geht beim nächsten Build ohnehin verloren.",
+
   "tools.nicht.h": "Bewusst (noch) nicht dabei",
   "tools.nicht.p": "Kein Router (Seiten wechseln hier per State), keine Server-/Fetch-Bibliothek, kein CSS-Framework – das CSS ist von Hand geschrieben. So bleibt sichtbar, was React selbst leistet. Diese Werkzeuge kommen in Stufe 3 (siehe Lernfahrplan).",
 

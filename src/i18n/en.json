@@ -298,6 +298,12 @@
   "tools.lib.oxlint": "The linter: finds problematic patterns in the code (npm run lint).",
   "tools.lib.reactlive": "The live editor in the basics lessons: runs edited example code instantly in the browser (with prism-react-renderer for syntax highlighting).",
   "tools.lib.node": "The runtime and the package manager: npm run dev, npm install & co. run on top of them.",
+  "tools.build.h": "What happens on npm run build?",
+  "tools.build.p1": "Your code in src/ consists of more than 20 files: TypeScript, JSX, several CSS files. No browser understands that directly – and 20 separate network requests would be slow. So on build, Vite translates and bundles everything into a few finished files in the dist/ folder.",
+  "tools.build.p2": "Concretely, exactly two files are produced under dist/assets/:",
+  "tools.build.p3": "The random code in the file name (e.g. -edQvr5ws) changes on every build as soon as the content changes. This is called cache busting: browsers cache files by their name – if only the content changed but not the name, users could end up with a stale version from the cache.",
+  "tools.build.p4": "That is why dist/ is in .gitignore: it is not source code but a reproducible result – anyone can regenerate it from src/. It is also exactly why the preToolUse guard (lesson 20) denies edits to files in dist/: hand-edits there would be lost on the next build anyway.",
+
   "tools.nicht.h": "Deliberately not included (yet)",
   "tools.nicht.p": "No router (pages switch via state here), no server/fetch library, no CSS framework – the CSS is hand-written. That keeps visible what React itself does. These tools come in stage 3 (see the roadmap).",
 

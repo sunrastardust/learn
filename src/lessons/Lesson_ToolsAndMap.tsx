@@ -67,6 +67,21 @@ export function Lesson_ToolsAndMap() {
         </table>
       </div>
 
+      {/* Was beim Build tatsaechlich entsteht -- konkret, nicht abstrakt.
+          What the build actually produces -- concrete, not abstract. */}
+      <h4>{t("tools.build.h")}</h4>
+      <p>{t("tools.build.p1")}</p>
+      <p>{t("tools.build.p2")}</p>
+      <pre className="code-block">{
+`dist/
+├─ index.html
+└─ assets/
+   ├─ index-B9f1Mm2N.css   (dein ganzes CSS, gebündelt)
+   └─ index-edQvr5ws.js    (dein ganzer Code + React, gebündelt)`
+      }</pre>
+      <p>{t("tools.build.p3")}</p>
+      <p className="merksatz">{t("tools.build.p4")}</p>
+
       <h4>{t("tools.nicht.h")}</h4>
       <p>{t("tools.nicht.p")}</p>
 
