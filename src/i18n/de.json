@@ -32,7 +32,7 @@
 
   "lektion.state.titel": "State mit useState",
   "lektion.state.kurz": "Eine Komponente bekommt ein Gedächtnis.",
-  "lektion.state.aufgabe": "In src/lessons/Lesson_State.tsx: ändere den Startwert in useState(0) auf 10. Baue dann einen dritten Button 'Zurücksetzen', der die Zahl mit setCount(0) wieder auf 0 stellt.",
+  "lektion.state.aufgabe": "Im ersten Editor: 1) Ändere den Startwert von useState(0) auf 10 – klicke ein paarmal und beobachte, dass die 10 danach NICHT mehr greift. 2) Baue einen dritten Button 'Zurücksetzen' mit setCount(0).\n3) Benenne count und setCount in anzahl und setAnzahl um (an ALLEN Stellen) – es funktioniert weiter, denn die Namen wählst du frei.\nIm zweiten Editor: 4) Ändere den Preis auf 3.9 und beobachte, dass die Summe automatisch stimmt. 5) Überlege: Was passiert, wenn du die Summe zusätzlich in einen eigenen State packst?",
 
   "lektion.events.titel": "Events & Eingaben",
   "lektion.events.kurz": "Ein Textfeld live mit State verbinden.",
@@ -91,8 +91,53 @@
   "l2.h": "Dieselbe Komponente, andere Props",
   "l2.hallo": "Hallo {name}!",
 
+  "l3.intro1": "Eine normale Variable in einer Komponente ist vergesslich: Bei jedem Neu-Zeichnen läuft die Funktion komplett neu durch – und die Variable beginnt wieder von vorn. State ist das Gegenteil: ein Wert, den React FÜR die Komponente aufbewahrt, über alle Durchläufe hinweg.",
+  "l3.intro2": "Der zweite Teil ist genauso wichtig: Ändert sich der State, zeichnet React die Komponente automatisch neu. Du sagst also nie \"aktualisiere jetzt die Anzeige\" – du änderst nur den Wert, den Rest macht React.",
+
+  "l3.hook.h": "Was ist überhaupt ein \"Hook\"?",
+  "l3.hook.p1": "Ein Hook ist einfach eine Funktion aus React, deren Name mit use… beginnt: useState, useEffect, useContext. Sie geben deiner Komponente Fähigkeiten, die eine normale Funktion nicht hat – zum Beispiel sich etwas zu merken (useState) oder auf die Außenwelt zu reagieren (useEffect). Am Namen erkennst du sie sofort.",
+  "l3.hook.p2": "Dafür gibt es zwei Regeln, und beide sind leicht einzuhalten: (1) Hooks stehen immer ganz oben in der Komponente – nie in einem if, einer Schleife oder einer verschachtelten Funktion. (2) Hooks werden nur in Komponenten (oder in eigenen use…-Funktionen) aufgerufen. Grund: React merkt sich die Hooks pro Komponente in fester Reihenfolge – die darf sich zwischen zwei Durchläufen nicht ändern.",
+
+  "l3.syn.h": "Die Syntax Stück für Stück",
+  "l3.syn.p": "Diese eine Zeile wirkt am Anfang kryptisch. Sie besteht aber nur aus sechs Teilen – hier ist jeder einzeln erklärt:",
+  "l3.syn.sp.teil": "Teil",
+  "l3.syn.sp.bed": "Bedeutung",
+  "l3.syn.const": "Ganz normales JavaScript. Verwirrend wirkt: Der Wert ändert sich doch! Aber count selbst wird NIE überschrieben – bei jedem Durchlauf läuft diese Zeile neu und legt count frisch an. Innerhalb EINES Durchlaufs bleibt count konstant.",
+  "l3.syn.klammern": "Die eckigen Klammern sind kein Array, sondern packen eines AUS. useState gibt zwei Dinge zurück (in einem Array), und diese Schreibweise verteilt sie auf zwei Variablen. Wichtig: Es zählt die REIHENFOLGE – der erste Eintrag ist immer der Wert, der zweite immer die Änderungs-Funktion.",
+  "l3.syn.count": "Der aktuelle Wert – der erste Eintrag. Den Namen wählst DU frei. count ist kein Schlüsselwort; du könntest ihn auch anzahl oder x nennen.",
+  "l3.syn.setcount": "Die Funktion zum Ändern – der zweite Eintrag. Auch dieser Name ist frei, aber es ist Konvention, set + den Namen des Werts zu schreiben (count → setCount). Daran erkennt jeder sofort, was zusammengehört.",
+  "l3.syn.usestate": "Der Hook selbst, importiert aus \"react\" (siehe die import-Zeile oben in der Datei). Der Aufruf sagt React: \"Leg mir bitte einen Speicherplatz an und gib mir Zugriff darauf.\"",
+  "l3.syn.start": "Der Startwert – hier die Zahl 0. Achtung: Er wird NUR beim allerersten Rendern verwendet. Danach ignoriert React ihn; der Wert kommt dann aus dem Speicher. Genau das ist die häufigste Verwirrung.",
+
+  "l3.flow.h": "Was passiert beim Klicken – Schritt für Schritt",
+  "l3.flow.p": "Beim Lesen von Code ist die wichtigste Frage: Wann läuft was? Hier der genaue Ablauf des Zählers oben.",
+  "l3.flow.p1.titel": "Phase 1 – Beim ersten Anzeigen",
+  "l3.flow.p1.s1": "React ruft die Funktion Counter() auf – wie jede normale Funktion.",
+  "l3.flow.p1.s2": "useState(0) legt einen Speicherplatz für diese Komponente an und gibt zwei Dinge zurück: den Wert 0 und die Funktion setCount.",
+  "l3.flow.p1.s3": "Die eckigen Klammern packen beides aus: count ist jetzt 0, setCount ist die Funktion.",
+  "l3.flow.p1.s4": "Das JSX wird mit count = 0 gebaut – auf dem Bildschirm steht \"Zähler: 0\".",
+  "l3.flow.p2.titel": "Phase 2 – Bei jedem Klick (wiederholt sich)",
+  "l3.flow.p2.s1": "Du klickst. onClick ruft setCount auf.",
+  "l3.flow.p2.s2": "React notiert den neuen Wert (1). ABER: In diesem gerade laufenden Durchlauf ist count immer noch 0 – die Zeile const [count, …] ist ja längst gelaufen.",
+  "l3.flow.p2.s3": "Weil sich der State geändert hat, ruft React die Funktion Counter() KOMPLETT NEU auf – von oben.",
+  "l3.flow.p2.s4": "useState(0) läuft wieder – gibt jetzt aber 1 zurück, nicht 0. Der Startwert 0 galt nur beim allerersten Mal.",
+  "l3.flow.p2.s5": "Das JSX wird mit count = 1 gebaut. React vergleicht mit vorher und ändert im Browser nur die Zahl – nicht die ganze Seite.",
+
+  "l3.bsp.h": "Beispiel 1: der Zähler",
   "l3.zaehler": "Zähler: {count}",
-  "l3.p1": "Jeder Klick ändert den State. Weil sich der State ändert, rendert React die Komponente neu – und die Zahl oben stimmt wieder.",
+  "l3.p1": "Jeder Klick ändert den State. Weil sich der State ändert, rendert React die Komponente neu – und die Zahl oben stimmt wieder. Probier es im Editor aus: Der Code darunter macht genau dasselbe.",
+
+  "l3.praxis.h": "Beispiel 2: was gehört überhaupt in den State?",
+  "l3.praxis.p1": "Das ist die Frage, die im Alltag am häufigsten falsch beantwortet wird. Die Faustregel: In den State kommt nur, was sich ändert UND sich nicht ausrechnen lässt. In dieser kleinen Bestellung sind alle drei Fälle nebeneinander zu sehen:",
+  "l3.praxis.p2": "Beachte die Summe: Sie ist KEIN State, sondern wird bei jedem Rendern neu ausgerechnet (quantity × pricePerItem). Würde man sie zusätzlich im State halten, müsste man sie bei jeder Mengenänderung von Hand nachziehen – und früher oder später vergisst man genau das. Abgeleitete Werte einfach ausrechnen: eine der wichtigsten React-Gewohnheiten.",
+
+  "l3.stolper.h": "Häufige Stolpersteine",
+  "l3.stolper.i1": "count = count + 1 funktioniert NICHT. React bekommt davon nichts mit, es rendert nicht neu, und beim nächsten Durchlauf ist der Wert ohnehin wieder weg. Änderungen laufen IMMER über setCount.",
+  "l3.stolper.i2": "Direkt nach setCount(5) ist count in derselben Funktion noch der alte Wert. Wer sofort damit weiterrechnet, rechnet mit dem Stand von vorher. Der neue Wert steht erst im nächsten Durchlauf bereit.",
+  "l3.stolper.i3": "Genau deshalb schreibt man setCount(v => v + 1) statt setCount(count + 1), wenn der neue Wert auf dem alten aufbaut: Die Schreibweise mit Pfeil fragt React nach dem aktuellsten Wert – wichtig, wenn schnell hintereinander geklickt wird.",
+  "l3.stolper.i4": "useState(0) setzt NICHT bei jedem Rendern auf 0 zurück. Der Startwert gilt nur beim allerersten Mal – danach kommt der Wert aus dem Speicher.",
+
+  "l3.merksatz": "Merksatz: useState gibt dir ein Paar – einen Wert zum Lesen und eine Funktion zum Ändern. Du änderst nie den Wert selbst, sondern rufst die Funktion auf. React zeichnet dann die Komponente von oben neu, und der Wert kommt frisch aus dem Speicher.",
 
   "l4.h": "Live-Eingabe",
   "l4.platzhalter": "Tippe hier etwas...",

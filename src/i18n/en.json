@@ -32,7 +32,7 @@
 
   "lektion.state.titel": "State with useState",
   "lektion.state.kurz": "A component gets a memory.",
-  "lektion.state.aufgabe": "In src/lessons/Lesson_State.tsx: change the starting value in useState(0) to 10. Then add a third button 'Reset' that sets the number back to 0 with setCount(0).",
+  "lektion.state.aufgabe": "In the first editor: 1) Change the starting value of useState(0) to 10 – click a few times and watch how the 10 does NOT apply anymore afterwards. 2) Add a third button 'Reset' using setCount(0).\n3) Rename count and setCount to quantity and setQuantity (in ALL places) – it keeps working, because you choose the names freely.\nIn the second editor: 4) Change the price to 3.9 and watch the total stay correct automatically. 5) Think about it: what happens if you additionally put the total into its own state?",
 
   "lektion.events.titel": "Events & input",
   "lektion.events.kurz": "Wiring a text field to state, live.",
@@ -91,8 +91,53 @@
   "l2.h": "Same component, different props",
   "l2.hallo": "Hello {name}!",
 
+  "l3.intro1": "A normal variable inside a component is forgetful: on every re-render the function runs through completely again – and the variable starts from scratch. State is the opposite: a value React keeps FOR the component, across all those runs.",
+  "l3.intro2": "The second part matters just as much: when the state changes, React re-renders the component automatically. So you never say \"now update the display\" – you only change the value, React does the rest.",
+
+  "l3.hook.h": "What actually is a \"hook\"?",
+  "l3.hook.p1": "A hook is simply a function from React whose name starts with use…: useState, useEffect, useContext. They give your component abilities a plain function does not have – for example remembering something (useState) or reacting to the outside world (useEffect). You recognise them instantly by their name.",
+  "l3.hook.p2": "There are two rules for them, and both are easy to follow: (1) hooks always sit at the very top of the component – never inside an if, a loop or a nested function. (2) hooks are only called inside components (or inside your own use… functions). The reason: React remembers the hooks per component in a fixed order – and that order must not change between two runs.",
+
+  "l3.syn.h": "The syntax piece by piece",
+  "l3.syn.p": "This single line looks cryptic at first. But it consists of only six parts – here is each one explained:",
+  "l3.syn.sp.teil": "Part",
+  "l3.syn.sp.bed": "Meaning",
+  "l3.syn.const": "Perfectly normal JavaScript. What looks confusing: but the value does change! Yet count itself is NEVER overwritten – on every run this line executes again and creates count freshly. Within ONE run, count stays constant.",
+  "l3.syn.klammern": "The square brackets are not an array – they UNPACK one. useState returns two things (in an array), and this notation spreads them into two variables. Important: the ORDER is what counts – the first entry is always the value, the second always the update function.",
+  "l3.syn.count": "The current value – the first entry. YOU choose the name freely. count is not a keyword; you could just as well call it quantity or x.",
+  "l3.syn.setcount": "The function to change it – the second entry. This name is free too, but the convention is to write set + the value's name (count → setCount). That way everyone instantly sees what belongs together.",
+  "l3.syn.usestate": "The hook itself, imported from \"react\" (see the import line at the top of the file). Calling it tells React: \"please create a storage slot for me and give me access to it.\"",
+  "l3.syn.start": "The starting value – here the number 0. Careful: it is used ONLY on the very first render. After that React ignores it; the value then comes from storage. This is the single most common source of confusion.",
+
+  "l3.flow.h": "What happens on click – step by step",
+  "l3.flow.p": "When reading code, the key question is: when does what run? Here is the exact flow of the counter above.",
+  "l3.flow.p1.titel": "Phase 1 – On the first render",
+  "l3.flow.p1.s1": "React calls the function Counter() – like any normal function.",
+  "l3.flow.p1.s2": "useState(0) creates a storage slot for this component and returns two things: the value 0 and the function setCount.",
+  "l3.flow.p1.s3": "The square brackets unpack both: count is now 0, setCount is the function.",
+  "l3.flow.p1.s4": "The JSX is built with count = 0 – the screen shows \"Counter: 0\".",
+  "l3.flow.p2.titel": "Phase 2 – On every click (repeats)",
+  "l3.flow.p2.s1": "You click. onClick calls setCount.",
+  "l3.flow.p2.s2": "React notes the new value (1). BUT: in the run that is currently executing, count is still 0 – the line const [count, …] ran long ago.",
+  "l3.flow.p2.s3": "Because the state changed, React calls the function Counter() COMPLETELY AGAIN – from the top.",
+  "l3.flow.p2.s4": "useState(0) runs again – but now returns 1, not 0. The starting value 0 only applied on the very first run.",
+  "l3.flow.p2.s5": "The JSX is built with count = 1. React compares it with before and changes only the number in the browser – not the whole page.",
+
+  "l3.bsp.h": "Example 1: the counter",
   "l3.zaehler": "Counter: {count}",
-  "l3.p1": "Every click changes the state. Because the state changes, React re-renders the component – and the number above is correct again.",
+  "l3.p1": "Every click changes the state. Because the state changes, React re-renders the component – and the number above is correct again. Try it in the editor: the code below does exactly the same thing.",
+
+  "l3.praxis.h": "Example 2: what belongs in state at all?",
+  "l3.praxis.p1": "This is the question most often answered wrongly in practice. The rule of thumb: only what changes AND cannot be computed belongs in state. In this small order, all three cases sit side by side:",
+  "l3.praxis.p2": "Note the total: it is NOT state but is recomputed on every render (quantity × pricePerItem). If you also kept it in state, you would have to keep it in sync by hand on every quantity change – and sooner or later you forget exactly that. Simply computing derived values is one of the most important React habits.",
+
+  "l3.stolper.h": "Common pitfalls",
+  "l3.stolper.i1": "count = count + 1 does NOT work. React notices nothing, it does not re-render, and on the next run the value is gone anyway. Changes ALWAYS go through setCount.",
+  "l3.stolper.i2": "Right after setCount(5), count is still the old value inside the same function. If you keep computing with it immediately, you compute with the previous state. The new value is only available on the next run.",
+  "l3.stolper.i3": "That is exactly why you write setCount(v => v + 1) instead of setCount(count + 1) when the new value builds on the old one: the arrow form asks React for the most current value – important when clicks come in quick succession.",
+  "l3.stolper.i4": "useState(0) does NOT reset to 0 on every render. The starting value only applies on the very first run – after that the value comes from storage.",
+
+  "l3.merksatz": "Mnemonic: useState hands you a pair – a value to read and a function to change it. You never change the value itself, you call the function. React then re-renders the component from the top, and the value comes fresh from storage.",
 
   "l4.h": "Live input",
   "l4.platzhalter": "Type something here...",
