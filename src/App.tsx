@@ -12,11 +12,12 @@
 // purely through state (NO router yet -- that comes later).
 // All fixed texts come from the language files (DE/EN) via t().
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { lessons } from "./lessons/lessons";
 import { LessonList } from "./components/LessonList";
 import { Task } from "./components/Task";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
+import { SearchBox } from "./components/SearchBox";
 import { useLanguage } from "./i18n/LanguageContext";
 import "./App.css";
 
@@ -48,6 +49,66 @@ export default function App() {
     setMenuOpen(false);
   }
 
+  // Fuer die Suche: Wonach wurde gesucht, und das wievielte Mal? Der Zaehler
+  // (nonce) sorgt dafuer, dass der Effekt unten AUCH dann laeuft, wenn man
+  // zweimal hintereinander denselben Treffer anklickt -- der Text allein
+  // haette sich dann ja nicht geaendert.
+  // For the search: what was searched for, and for the how-many-th time? The
+  // counter (nonce) makes the effect below run EVEN IF you click the same
+  // result twice in a row -- the text alone would not have changed then.
+  const [jump, setJump] = useState({ term: "", nonce: 0 });
+
+  // Der Bereich mit dem Lektions-Inhalt. Ein "ref" ist ein direkter Griff auf
+  // ein echtes DOM-Element -- den brauchen wir, um darin nach der Fundstelle
+  // zu suchen und dorthin zu scrollen.
+  // The area holding the lesson content. A "ref" is a direct handle on a real
+  // DOM element -- we need it to search for the matching spot inside it and
+  // scroll there.
+  const contentRef = useRef<HTMLElement>(null);
+
+  // Klick auf einen Suchtreffer: Lektion wechseln und den Suchbegriff merken.
+  // Click on a search result: switch lesson and remember the search term.
+  function jumpToHit(lessonId: number, term: string) {
+    setActiveId(lessonId);
+    setMenuOpen(false);
+    setJump((prev) => ({ term, nonce: prev.nonce + 1 }));
+  }
+
+  // Nach dem Wechsel die Fundstelle suchen, hinscrollen und kurz hervorheben.
+  // useEffect laeuft NACH dem Rendern -- erst dann steht der neue Lektions-
+  // Text im DOM und kann durchsucht werden (siehe Lektion 12).
+  // After the switch, find the matching spot, scroll to it and highlight it
+  // briefly. useEffect runs AFTER rendering -- only then is the new lesson
+  // text in the DOM and can be searched (see lesson 12).
+  useEffect(() => {
+    if (!jump.term || !contentRef.current) return;
+    const needle = jump.term.toLowerCase();
+
+    // Nur "Text-Elemente" durchsehen, keine Container -- sonst waere der
+    // erste Treffer immer das aeusserste <div>.
+    // Only look at "text elements", not containers -- otherwise the first
+    // match would always be the outermost <div>.
+    const candidates = contentRef.current.querySelectorAll("p, li, h3, h4, td, th");
+    for (const element of candidates) {
+      if ((element.textContent ?? "").toLowerCase().includes(needle)) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.classList.add("search-found");
+        // Die Hervorhebung nach kurzer Zeit wieder entfernen. Die zurueck-
+        // gegebene Funktion raeumt den Timer auf (siehe Lektion 12).
+        // Remove the highlight after a short while. The returned function
+        // cleans up the timer (see lesson 12).
+        const timer = setTimeout(() => element.classList.remove("search-found"), 2500);
+        return () => clearTimeout(timer);
+      }
+    }
+
+    // Nichts gefunden (z. B. Treffer stand nur im Titel)? Dann wenigstens
+    // an den Anfang der Lektion springen.
+    // Nothing found (e.g. the match was only in the title)? Then at least
+    // jump to the start of the lesson.
+    contentRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [jump]);
+
   // Aus der id die passende Lektion heraussuchen. .find() kann theoretisch
   // nichts finden, deshalb faengt `?? lessons[0]` diesen Fall ab.
   // Look up the matching lesson by id. .find() can in theory find nothing,
@@ -77,7 +138,12 @@ export default function App() {
           <h1>{t("app.titel")}</h1>
           <p>{t("app.untertitel")}</p>
         </div>
-        <LanguageSwitcher />
+        {/* Rechts oben: erst die Suche, dann der Sprach-Umschalter.
+            Top right: the search first, then the language switch. */}
+        <div className="header-tools">
+          <SearchBox lessons={lessons} onJump={jumpToHit} />
+          <LanguageSwitcher />
+        </div>
       </header>
 
       {/* Nur auf schmalen Bildschirmen sichtbar (siehe App.css): klappt die
@@ -108,7 +174,7 @@ export default function App() {
 
         {/* RECHTS: die aktuell gewaehlte Lektion.
             RIGHT: the currently selected lesson. */}
-        <main className="content">
+        <main className="content" ref={contentRef}>
           {/* Fortschritt: die wievielte von wie vielen Lektionen? Die
               Platzhalter {current}/{total} werden von t() ersetzt.
               Progress: which lesson out of how many? The placeholders

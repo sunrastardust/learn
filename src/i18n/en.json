@@ -9,6 +9,10 @@
   "nav.fortschritt": "Lesson {current} of {total}",
   "nav.menu": "Lessons",
 
+  "suche.platzhalter": "Search lessons …",
+  "suche.label": "Search all lessons",
+  "suche.treffer": "{count} results",
+
   "aufgabe.titel": "Your task",
 
   "lektion.einfuehrung.titel": "Introduction",

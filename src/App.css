@@ -27,6 +27,98 @@
   color: var(--text);
 }
 
+/* Suche und Sprach-Umschalter stehen nebeneinander oben rechts.
+   Search and language switcher sit side by side in the top right. */
+.header-tools {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* --- Volltext-Suche / full-text search --- */
+/* position: relative macht diesen Kasten zum Bezugspunkt fuer die
+   Trefferliste, die darunter "schwebt" (position: absolute).
+   position: relative makes this box the anchor for the result list that
+   "floats" below it (position: absolute). */
+.search {
+  position: relative;
+}
+.search-input {
+  font: inherit;
+  font-size: 15px;
+  width: 220px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-border);
+}
+/* Die Trefferliste legt sich UEBER den Inhalt, statt ihn wegzuschieben.
+   The result list lies ON TOP of the content instead of pushing it away. */
+.search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 340px;
+  max-width: 80vw;
+  max-height: 60vh;
+  overflow-y: auto;
+  z-index: 10;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+.search-count {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.search-hit-button {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+.search-hit-button:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+.search-hit-title {
+  font-size: 15px;
+  color: var(--text-h);
+}
+.search-hit-excerpt {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+/* Kurzes Aufleuchten der Fundstelle nach dem Sprung. Nach 2,5 Sekunden
+   entfernt App.tsx die Klasse wieder.
+   Brief highlight of the matching spot after the jump. After 2.5 seconds
+   App.tsx removes the class again. */
+.search-found {
+  background: var(--accent-bg);
+  box-shadow: 0 0 0 6px var(--accent-bg);
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
 /* --- Sprach-Umschalter (oben rechts) / language switcher (top right) --- */
 .language-switcher {
   display: inline-flex;
@@ -978,6 +1070,26 @@
   }
   .header p {
     font-size: 15px;
+  }
+
+  /* Suche und Sprachwahl nebeneinander in einer eigenen Zeile; das
+     Suchfeld nimmt den uebrigen Platz ein.
+     Search and language choice side by side on their own row; the search
+     field takes the remaining space. */
+  .header-tools {
+    width: 100%;
+    align-items: center;
+  }
+  .search {
+    flex: 1;
+  }
+  .search-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .search-results {
+    width: 100%;
+    max-width: none;
   }
 
   /* --- Die Navigation: aufklappbares Menue ---

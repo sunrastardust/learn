@@ -47,6 +47,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.einfuehrung.kurz",
     taskKey: "lektion.einfuehrung.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["einf"],
     Content: Lesson_Introduction,
   },
   {
@@ -55,6 +56,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.struktur.kurz",
     taskKey: "lektion.struktur.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["struct"],
     Content: Lesson_ReactStructure,
   },
   {
@@ -64,6 +66,7 @@ export const lessons: Lesson[] = [
     // Kein taskKey: Diese Uebersichts-Lektion hat bewusst keine Aufgabe.
     // No taskKey: this overview lesson deliberately has no task.
     groupKey: "gruppe.react",
+    searchPrefixes: ["proj"],
     Content: Lesson_AboutThisProject,
   },
   {
@@ -72,6 +75,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.werkzeuge.kurz",
     taskKey: "lektion.werkzeuge.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["tools", "map"],
     Content: Lesson_ToolsAndMap,
   },
   {
@@ -80,6 +84,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.komponenten.kurz",
     taskKey: "lektion.komponenten.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["l1"],
     Content: Lesson_ComponentsJSX,
   },
   {
@@ -88,6 +93,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.props.kurz",
     taskKey: "lektion.props.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["l2"],
     Content: Lesson_Props,
   },
   {
@@ -96,6 +102,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.state.kurz",
     taskKey: "lektion.state.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["l3"],
     Content: Lesson_State,
   },
   {
@@ -104,6 +111,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.events.kurz",
     taskKey: "lektion.events.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["l4"],
     Content: Lesson_Events,
   },
   {
@@ -112,6 +120,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.bedingt.kurz",
     taskKey: "lektion.bedingt.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["bed"],
     Content: Lesson_ConditionalRendering,
   },
   {
@@ -120,6 +129,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.listen.kurz",
     taskKey: "lektion.listen.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["li"],
     Content: Lesson_ListsKeys,
   },
   {
@@ -128,6 +138,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.gemeinsam.kurz",
     taskKey: "lektion.gemeinsam.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["gem"],
     Content: Lesson_SharedState,
   },
   {
@@ -136,6 +147,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.effekt.kurz",
     taskKey: "lektion.effekt.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["eff"],
     Content: Lesson_UseEffect,
   },
   {
@@ -144,6 +156,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.i18n.kurz",
     taskKey: "lektion.i18n.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["mehr"],
     Content: Lesson_MultiLanguage,
   },
   {
@@ -152,6 +165,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.config.kurz",
     taskKey: "lektion.config.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["cfg"],
     Content: Lesson_ConfigFiles,
   },
   {
@@ -160,6 +174,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.roadmap.kurz",
     taskKey: "lektion.roadmap.aufgabe",
     groupKey: "gruppe.react",
+    searchPrefixes: ["road"],
     Content: Lesson_Roadmap,
   },
   {
@@ -168,6 +183,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.agintro.kurz",
     taskKey: "lektion.agintro.aufgabe",
     groupKey: "gruppe.agenten",
+    searchPrefixes: ["agi", "modi", "org"],
     Content: Lesson_AgentsIntro,
   },
   {
@@ -176,6 +192,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.mechanismen.kurz",
     taskKey: "lektion.mechanismen.aufgabe",
     groupKey: "gruppe.agenten",
+    searchPrefixes: ["mech"],
     Content: Lesson_Mechanisms,
   },
   {
@@ -184,6 +201,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.agsim.kurz",
     taskKey: "lektion.agsim.aufgabe",
     groupKey: "gruppe.agenten",
+    searchPrefixes: ["sim"],
     Content: Lesson_AgentSimulator,
   },
   {
@@ -192,6 +210,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.fm.kurz",
     taskKey: "lektion.fm.aufgabe",
     groupKey: "gruppe.agenten",
+    searchPrefixes: ["fm"],
     Content: Lesson_Frontmatter,
   },
   {
@@ -200,6 +219,7 @@ export const lessons: Lesson[] = [
     summaryKey: "lektion.shm.kurz",
     taskKey: "lektion.shm.aufgabe",
     groupKey: "gruppe.agenten",
+    searchPrefixes: ["shm"],
     Content: Lesson_ScriptsHooksMCP,
   },
 ];

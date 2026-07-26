@@ -52,6 +52,13 @@ type LanguageContextType = {
   language: Language;
   setLanguage: (next: Language) => void;
   t: (key: string, values?: Values) => string;
+  // Das komplette Woerterbuch der aktuellen Sprache (Schluessel -> Text).
+  // Normalerweise braucht man nur t(); die Suche will aber ALLE Texte
+  // durchsehen koennen, nicht nur einen einzelnen Schluessel abfragen.
+  // The complete dictionary of the current language (key -> text).
+  // Usually t() is all you need; but the search wants to look through ALL
+  // texts, not just fetch a single key.
+  dict: Record<string, string>;
 };
 
 // Der eigentliche Context. Startwert `null`, weil er erst im Provider
@@ -93,7 +100,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // `value` ist das, was alle Kinder ueber useLanguage() erhalten.
   // `value` is what all children receive via useLanguage().
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, dict: dictionaries[language] }}>
       {children}
     </LanguageContext.Provider>
   );

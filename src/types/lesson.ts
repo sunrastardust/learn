@@ -41,6 +41,16 @@ export type Lesson = {
   // agents. The list on the left renders headings from it.
   groupKey: string;
 
+  // Fuer die Suche: die Schluessel-Praefixe dieser Lektion, z.B. ["einf"]
+  // fuer alle Schluessel, die mit "einf." beginnen. Damit weiss die Suche,
+  // welche Texte aus den Sprachdateien zu welcher Lektion gehoeren.
+  // Legst du eine neue Lektion an, traegst du hier ihr Praefix ein.
+  // For the search: this lesson's key prefixes, e.g. ["einf"] for all keys
+  // starting with "einf.". This is how the search knows which texts from the
+  // language files belong to which lesson.
+  // When you add a new lesson, put its prefix here.
+  searchPrefixes: string[];
+
   // Die Komponente der Lektion selbst. `ComponentType` ist der React-Typ fuer
   // "irgendeine Komponente, die man rendern kann".
   // The lesson's component itself. `ComponentType` is the React type for
