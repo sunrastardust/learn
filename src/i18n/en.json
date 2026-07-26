@@ -136,7 +136,7 @@
   "agi.p2": "Everything the model 'sees' – rules, code, intermediate steps – lands in its context window and costs tokens. Tokens are the little chunks of text models read and write – billing is per chunk, so they mean money and attention. The most important design rule is therefore: load as little as possible, as much as needed.",
   "agi.p3": "An agent SYSTEM is therefore not a single know-it-all but a team: a cheap router agent understands the task and passes it to the right specialist – with the right model (cheap for simple things, strong for tricky ones) and only the necessary tools.",
   "org.h": "This project's agent team",
-  "org.p": "Here is what that looks like concretely in this repo: a request goes to the cheap router, which passes it on to the fitting specialist. Everything in grey is added automatically – without anyone having to remember it.",
+  "org.p": "Here is what that looks like concretely in this repo: a request goes to the cheap router, which passes it on to the fitting specialist. Everything in the neutral colour is added automatically – without anyone having to remember it.",
   "org.a11y.titel": "Org chart of the agent setup",
   "org.a11y.desc": "On top the always-loaded base rules. In the middle: a request in chat goes to the router 'project', which delegates to the three specialists ui, logic and docs. Below, per agent, the area rules and skills that are added automatically.",
   "org.immer": "always loaded — applies to every agent",
@@ -148,7 +148,7 @@
   "org.docs.sub": "Haiku · README, texts",
   "org.regeln": "Area rules:",
   "org.keine": "none",
-  "org.legende": "Purple = agents · Grey = context added automatically",
+  "org.legende": "Highlighted = agents · Neutral = context added automatically",
 
   "agi.p4": "There are five mechanisms for this, each with its own purpose:",
   "agi.m1": "Always-on instructions (copilot-instructions.md) – the project's iron rules. Loaded on EVERY request → keep them as short as humanly possible.",
